@@ -96,20 +96,22 @@
             const [showPhone, setShowPhone] = useState(false);
             const [boxHeight, setBoxHeight] = useState('auto');
             const [language, setLanguage] = useState('fa');
+            const [selectedProject, setSelectedProject] = useState(null);
+            const [isClosing, setIsClosing] = useState(false);
             const contentRef = useRef(null);
 
             const content = {
                 fa: {
-                    profile: { name: "مهدی جهانگیری", title: "طراح گافیک، موشن گرافیک" },
+                    profile: { name: "محمدمهدی جهانگیری مهر", title: "طراح گرافیک و موشن گرافیک" },
                     ui: { contact: "ارتباط با من", phoneText: "۰۹۱۲ ۷۳۷ ۳۱۵۸" },
                     tabs: { about: "درباره من", experience: "سوابق کاری", portfolio: "نمونه‌کارها", education: "آموزش‌ها و دوره‌ها", skills: "مهارت‌ها" },
-                    filters: { all: "همه", uiux: "رابط کاربری", web: "طراحی وب", app: "اپلیکیشن" }
+                    filters: { all: "همه", graphic: "طراحی گرافیک", motion: "موشن گرافیک", logo: "طراحی لوگو" }
                 },
                 en: {
-                    profile: { name: "Mahdi Jahangiri", title: "Graphic Designer" },
+                    profile: { name: "Mohammadmehdi Jahangirimehr", title: "Graphic & Motion Designer" },
                     ui: { contact: "Contact Me", phoneText: "+98 912 737 3158" },
                     tabs: { about: "About Me", experience: "Experience", portfolio: "Portfolio", education: "Education", skills: "Skills" },
-                    filters: { all: "All", uiux: "UI/UX", web: "Web Design", app: "App Design" }
+                    filters: { all: "All", graphic: "Graphic Design", motion: "Motion Graphics", logo: "Logo Design" }
                 }
             };
 
@@ -119,8 +121,8 @@
             const currentFilters = currentContent.filters;
 
             const titleWidths = {
-                fa: { about: '110px', experience: '120px', portfolio: '110px', 'portfolio-all': '140px', 'portfolio-uiux': '170px', 'portfolio-web': '160px', 'portfolio-app': '170px', education: '160px', skills: '100px' },
-                en: { about: '115px', experience: '115px', portfolio: '100px', 'portfolio-all': '130px', 'portfolio-uiux': '160px', 'portfolio-web': '170px', 'portfolio-app': '170px', education: '110px', skills: '80px' }
+                fa: { about: '110px', experience: '120px', portfolio: '110px', 'portfolio-all': '140px', 'portfolio-graphic': '190px', 'portfolio-motion': '190px', 'portfolio-logo': '170px', education: '160px', skills: '100px' },
+                en: { about: '115px', experience: '115px', portfolio: '100px', 'portfolio-all': '130px', 'portfolio-graphic': '190px', 'portfolio-motion': '200px', 'portfolio-logo': '180px', education: '110px', skills: '80px' }
             };
 
             let currentTitleKey = activeTab;
@@ -148,11 +150,50 @@
                 document.documentElement.lang = language;
             }, [language]);
 
+            const handleCloseModal = () => {
+                setIsClosing(true);
+                // صبر کردن به مدت 300 میلی‌ثانیه برای اجرای انیمیشن خروج، سپس حذف کردن مدال
+                setTimeout(() => {
+                    setSelectedProject(null);
+                    setIsClosing(false);
+                }, 300);
+            };
+
             const portfolioItems = [
-                { id: 1, category: 'uiux', title: { fa: "داشبورد مدیریت مالی", en: "Finance Dashboard" }, image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=600" },
-                { id: 2, category: 'web', title: { fa: "وب‌سایت فروشگاهی", en: "E-commerce Website" }, image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=600" },
-                { id: 3, category: 'app', title: { fa: "اپلیکیشن تناسب اندام", en: "Fitness App" }, image: "https://images.unsplash.com/photo-1526498460520-4c246339dccb?auto=format&fit=crop&q=80&w=600" },
-                { id: 4, category: 'uiux', title: { fa: "طراحی مجدد اپلیکیشن بانکی", en: "Banking App Redesign" }, image: "https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?auto=format&fit=crop&q=80&w=600" },
+                { 
+                    id: 1, 
+                    category: 'motion', 
+                    type: 'video',
+                    title: { fa: "موشن گرافیک تبلیغاتی اپل", en: "Apple Commercial Motion" }, 
+                    thumbnail: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=600", 
+                    videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4",
+                    desc: { fa: "طراحی و متحرک‌سازی ویدیوی تبلیغاتی مینیمال برای معرفی ویژگی‌های جدید محصول. استفاده از افترافکت برای خلق حرکت‌های نرم و جذاب.", en: "Designing and animating a minimal commercial video to introduce new product features. Used After Effects to create smooth, engaging motions." }
+                },
+                { 
+                    id: 2, 
+                    category: 'graphic', 
+                    type: 'image',
+                    title: { fa: "طراحی پوستر فستیوال هنر", en: "Art Festival Poster" }, 
+                    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=600",
+                    desc: { fa: "طراحی پوستر خلاقانه برای رویداد بین‌المللی با تمرکز بر تایپوگرافی مدرن و پالت رنگی جسورانه.", en: "Creative poster design for an international event focusing on modern typography and a bold color palette." }
+                },
+                { 
+                    id: 3, 
+                    category: 'logo', 
+                    type: 'image',
+                    title: { fa: "هویت بصری استارتاپ تک", en: "Tech Startup Identity" }, 
+                    image: "https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&q=80&w=600",
+                    desc: { fa: "طراحی لوگو، تایپوگرافی سازمانی و پالت رنگی برای یک استارتاپ فین‌تک با رویکرد القای حس اعتماد و سرعت.", en: "Logo design, corporate typography, and color palette for a fintech startup aiming to convey trust and speed." }
+                },
+                { 
+                    id: 4, 
+                    category: 'motion', 
+                    type: 'video',
+                    title: { fa: "انیمیشن معرفی اپلیکیشن", en: "App Explainer Animation" }, 
+                    thumbnail: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=600",
+                    videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4",
+                    desc: { fa: "ساخت ویدیوی موشن گرافیک دو بعدی فلت برای آموزش نحوه ثبت‌نام و استفاده از خدمات اپلیکیشن.", en: "Creating a 2D flat motion graphics video to explain the registration process and app services." }
+                },
             ];
 
             const experienceItems = [
@@ -167,7 +208,7 @@
                 <div 
                     className="min-h-screen bg-[#fafafa] flex justify-center selection:bg-[#0000fc] selection:text-white transition-colors duration-500"
                     dir={language === 'fa' ? 'rtl' : 'ltr'}
-                    style={{ fontFamily: language === 'fa' ? '"Modam", "Vazirmatn", Tahoma, sans-serif' : '"Inter", sans-serif' }}
+                    style={{ fontFamily: language === 'fa' ? '"Modam", "Inter", sans-serif' : '"Inter", "Modam", sans-serif' }}
                 >
                     <div className="w-full max-w-6xl p-4 sm:p-6 md:p-8 flex flex-col lg:flex-row gap-6 md:gap-8 lg:gap-10 relative items-start">
                         
@@ -307,11 +348,19 @@
                                             {filteredPortfolio.map((item, idx) => (
                                                 <div 
                                                     key={item.id} 
-                                                    className="group relative rounded-2xl overflow-hidden bg-white shadow-sm border border-gray-100 hover:shadow-md transition-shadow animate-[zoomIn_0.5s_ease-out_forwards]"
+                                                    onClick={() => setSelectedProject(item)}
+                                                    className="group relative rounded-2xl overflow-hidden bg-white shadow-sm border border-gray-100 hover:shadow-md transition-all cursor-pointer animate-[zoomIn_0.5s_ease-out_forwards]"
                                                     style={{ animationDelay: `${idx * 100}ms`, opacity: 0 }}
                                                 >
-                                                    <div className="aspect-[4/3] w-full overflow-hidden">
-                                                        <img src={item.image} alt={item.title[language]} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" />
+                                                    <div className="aspect-[4/3] w-full overflow-hidden relative">
+                                                        <img src={item.type === 'video' ? item.thumbnail : item.image} alt={item.title[language]} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" />
+                                                        {item.type === 'video' && (
+                                                            <div className="absolute inset-0 bg-black/10 flex items-center justify-center group-hover:bg-black/30 transition-colors duration-500">
+                                                                <div className="w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform duration-300">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="none" className="text-[#0000fc] ml-1"><path d="M5 3l14 9-14 9V3z"/></svg>
+                                                                </div>
+                                                            </div>
+                                                        )}
                                                     </div>
                                                     <div className="p-4 sm:p-5">
                                                         <span className="text-[10px] sm:text-xs font-bold text-[#0000fc] bg-blue-50 px-2 py-1 rounded-md mb-2 inline-block">
@@ -344,6 +393,60 @@
                         </main>
                     </div>
                     
+                    {/* Modal (پنجره پاپ‌آپ برای نمایش جزئیات نمونه‌کار) */}
+                    {selectedProject && (
+                        <div className={`fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-12 ${isClosing ? 'animate-[fadeOut_0.3s_ease-in_forwards]' : 'animate-[fadeIn_0.3s_ease-out]'}`}>
+                            {/* بک‌گراند تاریک */}
+                            <div 
+                                className="absolute inset-0 bg-black/60 backdrop-blur-sm cursor-pointer" 
+                                onClick={handleCloseModal}
+                            ></div>
+                            
+                            {/* باکس اصلی مودال */}
+                            <div className={`relative bg-white rounded-2xl w-full max-w-4xl max-h-full flex flex-col shadow-2xl overflow-hidden z-10 ${isClosing ? 'animate-[slideDown_0.3s_ease-in_forwards]' : 'animate-[slideUp_0.4s_ease-out]'}`}>
+                                
+                                {/* دکمه بستن */}
+                                <button 
+                                    onClick={handleCloseModal}
+                                    className={`absolute top-4 z-20 w-10 h-10 bg-black/50 hover:bg-black text-white rounded-full flex items-center justify-center transition-colors backdrop-blur-md ${language === 'fa' ? 'left-4' : 'right-4'}`}
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                                </button>
+
+                                {/* بخش مدیا (ویدیو یا عکس) */}
+                                <div className="w-full bg-gray-900 shrink-0 relative aspect-video flex items-center justify-center overflow-hidden">
+                                    {selectedProject.type === 'video' ? (
+                                        <video 
+                                            src={selectedProject.videoUrl} 
+                                            controls 
+                                            autoPlay 
+                                            className="w-full h-full object-contain"
+                                        />
+                                    ) : (
+                                        <img 
+                                            src={selectedProject.image} 
+                                            alt={selectedProject.title[language]} 
+                                            className="w-full h-full object-contain"
+                                        />
+                                    )}
+                                </div>
+
+                                {/* بخش توضیحات */}
+                                <div className="p-6 sm:p-8 overflow-y-auto">
+                                    <span className="text-[10px] sm:text-xs font-bold text-[#0000fc] bg-blue-50 px-2 py-1 rounded-md mb-3 inline-block">
+                                        {currentFilters[selectedProject.category]}
+                                    </span>
+                                    <h2 className="text-2xl sm:text-3xl font-black text-gray-900 mb-4">
+                                        {selectedProject.title[language]}
+                                    </h2>
+                                    <p className="text-gray-600 leading-relaxed text-sm sm:text-base">
+                                        {selectedProject.desc[language]}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
                     {/* Add custom animations that were previously handled by tailwind-animate plugin */}
                     <style>
                         {`
@@ -351,9 +454,17 @@
                             from { opacity: 0; transform: translateY(16px); }
                             to { opacity: 1; transform: translateY(0); }
                         }
+                        @keyframes slideDown {
+                            from { opacity: 1; transform: translateY(0); }
+                            to { opacity: 0; transform: translateY(16px); }
+                        }
                         @keyframes fadeIn {
                             from { opacity: 0; transform: scale(0.95); }
                             to { opacity: 1; transform: scale(1); }
+                        }
+                        @keyframes fadeOut {
+                            from { opacity: 1; transform: scale(1); }
+                            to { opacity: 0; transform: scale(0.95); }
                         }
                         @keyframes zoomIn {
                             from { opacity: 0; transform: scale(0.95); }
