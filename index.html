@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl" class="overflow-y-scroll">
+<html lang="fa" dir="rtl" class="overflow-y-scroll bg-[#121212]">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -19,7 +19,7 @@
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
-        /* معرفی فونت مدام به مرورگر (فایل‌ها باید در کنار این فایل HTML باشند) */
+        /* معرفی فونت مدام */
         @font-face {
             font-family: 'Modam';
             src: url('./Modam.woff2') format('woff2');
@@ -42,27 +42,25 @@
             font-display: swap;
         }
 
-        /* فونت گوگل (Inter) برای بخش انگلیسی */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
-        
-        /* فونت بک‌آپ (وزیرمتن) برای زمانی که فایل مدام روی گوشی در دسترس نیست */
         @import url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.0.0/Vazirmatn-font-face.css');
 
         html, body {
             overflow-y: scroll !important;
-            background-color: #fafafa;
+            background-color: #121212; /* رنگ پس‌زمینه دارک */
         }
         
+        /* اسکرول‌بار تاریک */
         ::-webkit-scrollbar {
             width: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #fafafa;
+            background: #121212;
         }
         ::-webkit-scrollbar-thumb {
-            background-color: #cbd5e1;
+            background-color: #333;
             border-radius: 20px;
-            border: 2px solid #fafafa;
+            border: 2px solid #121212;
         }
         .scrollbar-hide::-webkit-scrollbar {
             display: none;
@@ -70,6 +68,11 @@
         .scrollbar-hide {
             -ms-overflow-style: none;
             scrollbar-width: none;
+        }
+
+        /* اعمال قطعی فونت به دکمه‌ها مخصوصاً در موبایل */
+        button {
+            font-family: inherit !important;
         }
     </style>
 </head>
@@ -79,12 +82,11 @@
     <script type="text/babel">
         const { useState, useEffect, useRef } = React;
         
-        // Icon Components mapping from Lucide
         const Mail = () => <i data-lucide="mail" className="w-4 h-4"></i>;
         const Phone = () => <i data-lucide="phone" className="w-3.5 h-3.5"></i>;
         const ChevronLeft = ({ className }) => <i data-lucide="chevron-left" className={className}></i>;
         const Play = () => <i data-lucide="play" className="w-12 h-12 text-white ml-1"></i>;
-        const X = () => <i data-lucide="x" className="w-6 h-6 text-gray-500"></i>;
+        const X = () => <i data-lucide="x" className="w-6 h-6 text-gray-400"></i>;
 
         function Portfolio() {
             const [activeTab, setActiveTab] = useState('about');
@@ -93,13 +95,11 @@
             const [boxHeight, setBoxHeight] = useState('auto');
             const [language, setLanguage] = useState('fa');
             
-            // استیت‌های مربوط به مودال پروژه‌ها
             const [selectedProject, setSelectedProject] = useState(null);
             const [isClosing, setIsClosing] = useState(false);
             
             const contentRef = useRef(null);
 
-            // اجرای آیکون‌های Lucide
             useEffect(() => {
                 lucide.createIcons();
             });
@@ -112,7 +112,7 @@
                     },
                     ui: {
                         contact: "ارتباط با من",
-                        phoneText: "۰۹۱۲ ۷۳ ۷۳ ۱۵۸", // شماره تلفن خود را جایگزین کنید
+                        phoneText: "۰۹۱۲ ۷۳ ۷۳ ۱۵۸",
                     },
                     tabs: {
                         about: "درباره من",
@@ -135,7 +135,7 @@
                     },
                     ui: {
                         contact: "Contact Me",
-                        phoneText: "+98 912 73 73 158", // شماره تلفن خود را جایگزین کنید
+                        phoneText: "+98 912 73 73 158",
                     },
                     tabs: {
                         about: "About Me",
@@ -161,14 +161,14 @@
             const titleWidths = {
                 fa: {
                     about: '110px', experience: '120px', portfolio: '110px',
-                    'portfolio-all': '140px', 'portfolio-graphic': '150px',
-                    'portfolio-motion': '150px', 'portfolio-logo': '140px',
+                    'portfolio-all': '110px', 'portfolio-graphic': '220px',
+                    'portfolio-motion': '220px', 'portfolio-logo': '200px',
                     education: '160px', skills: '100px'
                 },
                 en: {
                     about: '115px', experience: '115px', portfolio: '100px',
-                    'portfolio-all': '130px', 'portfolio-graphic': '160px',
-                    'portfolio-motion': '170px', 'portfolio-logo': '140px',
+                    'portfolio-all': '100px', 'portfolio-graphic': '230px',
+                    'portfolio-motion': '240px', 'portfolio-logo': '210px',
                     education: '110px', skills: '80px'
                 }
             };
@@ -242,31 +242,33 @@
 
             return (
                 <div 
-                    className="min-h-screen bg-[#fafafa] flex justify-center selection:bg-[#0000fc] selection:text-white transition-colors duration-500"
+                    className="min-h-screen bg-[#121212] flex justify-center selection:bg-[#0000fc] selection:text-white transition-colors duration-500"
                     dir={language === 'fa' ? 'rtl' : 'ltr'}
+                    style={{ 
+                        fontFamily: language === 'fa' 
+                            ? '"Modam", "Vazirmatn", "Inter", sans-serif' 
+                            : '"Inter", "Modam", "Vazirmatn", sans-serif' 
+                    }}
                 >
                     <div className="w-full max-w-6xl lg:p-8 flex flex-col lg:flex-row gap-0 lg:gap-10 relative items-start">
                         
-                        {/* سایدبار پروفایل */}
-                        <aside className="w-full lg:w-[280px] shrink-0 bg-[#f2f3f5] lg:rounded-2xl flex flex-col lg:sticky lg:top-8 shadow-[0_4px_20px_rgb(0,0,0,0.03)] lg:h-[calc(100vh-4rem)] z-40">
+                        <aside className="w-full lg:w-[280px] shrink-0 bg-[#1e1e1e] lg:rounded-2xl flex flex-col lg:sticky lg:top-8 shadow-[0_8px_30px_rgba(0,0,0,0.2)] lg:h-[calc(100vh-4rem)] z-40">
                             
-                            {/* ردیف اول: عکس پروفایل و دکمه‌های زبان */}
                             <div className="p-4 lg:p-6 shrink-0 flex flex-row lg:flex-col justify-between lg:justify-start items-center lg:items-stretch gap-4 relative z-20">
-                                <div className="flex items-center gap-3 bg-white p-2 lg:p-3 rounded-2xl shadow-sm flex-1 lg:flex-none w-full lg:w-auto">
+                                <div className="flex items-center gap-3 bg-[#282828] p-2 lg:p-3 rounded-2xl shadow-sm flex-1 lg:flex-none w-full lg:w-auto">
                                     <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-xl bg-gradient-to-br from-[#0000fc] to-blue-400 overflow-hidden shrink-0 shadow-sm"></div>
                                     <div className="flex flex-col min-w-0">
-                                        <h1 className="text-gray-900 font-black text-[13px] truncate">{currentContent.profile.name}</h1>
-                                        <p className="text-gray-500 text-[10px] lg:text-[11px] truncate mt-0.5">{currentContent.profile.title}</p>
+                                        <h1 className="text-white font-black text-[13px] truncate">{currentContent.profile.name}</h1>
+                                        <p className="text-gray-400 text-[10px] lg:text-[11px] truncate mt-0.5">{currentContent.profile.title}</p>
                                     </div>
                                 </div>
                                 
-                                <div className="flex gap-1 bg-white p-1 rounded-xl shadow-sm shrink-0">
-                                    <button onClick={() => setLanguage('fa')} className={`px-2.5 lg:px-3 py-1.5 lg:py-1 text-[11px] lg:text-xs font-bold rounded-lg transition-colors ${language === 'fa' ? 'bg-[#0000fc] text-white' : 'text-gray-500 hover:bg-gray-50'}`}>فارسی</button>
-                                    <button onClick={() => setLanguage('en')} className={`px-2.5 lg:px-3 py-1.5 lg:py-1 text-[11px] lg:text-xs font-bold rounded-lg transition-colors ${language === 'en' ? 'bg-[#0000fc] text-white' : 'text-gray-500 hover:bg-gray-50'}`}>English</button>
+                                <div className="flex gap-1 bg-[#282828] p-1 rounded-xl shadow-sm shrink-0">
+                                    <button onClick={() => setLanguage('fa')} className={`px-2.5 lg:px-3 py-1.5 lg:py-1 text-[11px] lg:text-xs font-bold rounded-lg transition-colors ${language === 'fa' ? 'bg-[#0000fc] text-white' : 'text-gray-400 hover:bg-[#333]'}`}>فارسی</button>
+                                    <button onClick={() => setLanguage('en')} className={`px-2.5 lg:px-3 py-1.5 lg:py-1 text-[11px] lg:text-xs font-bold rounded-lg transition-colors ${language === 'en' ? 'bg-[#0000fc] text-white' : 'text-gray-400 hover:bg-[#333]'}`}>English</button>
                                 </div>
                             </div>
 
-                            {/* ردیف دوم: منوها (اسکرول افقی در موبایل) */}
                             <div className="flex-none lg:flex-1 overflow-x-auto lg:overflow-y-auto px-4 lg:px-6 pb-2 lg:pb-6 scrollbar-hide relative z-10 w-full">
                                 <nav className="flex flex-row lg:flex-col items-start lg:items-stretch gap-1 lg:gap-0 w-max lg:w-full">
                                     {Object.keys(currentTabs).map((key, index) => (
@@ -274,28 +276,30 @@
                                             <div className="flex flex-col items-stretch relative shrink-0">
                                                 <button
                                                     onClick={(e) => {
-                                                        setActiveTab(key);
-                                                        if (key !== 'portfolio') setActiveFilter('all');
+                                                        if (activeTab === key && key === 'portfolio') {
+                                                            setActiveTab('about');
+                                                        } else {
+                                                            setActiveTab(key);
+                                                            if (key !== 'portfolio') setActiveFilter('all');
+                                                        }
                                                         
-                                                        // حرکت خودکار و نرم منو در موبایل به سمت مرکز
                                                         if (window.innerWidth < 1024) {
                                                             e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
                                                         }
                                                     }}
-                                                    className={`relative group px-3 py-2 lg:px-4 lg:py-3 text-[11px] lg:text-sm font-bold rounded-xl transition-all duration-300 whitespace-nowrap shrink-0 w-full ${activeTab === key ? 'text-[#0000fc] bg-white shadow-sm' : 'text-gray-500 hover:text-gray-900 hover:bg-white/50'} ${language === 'en' ? 'lg:text-left text-center' : 'lg:text-right text-center'}`}
+                                                    className={`relative group px-3 py-2 lg:px-4 lg:py-3 text-[11px] lg:text-sm font-bold rounded-xl transition-all duration-300 whitespace-nowrap shrink-0 w-full ${activeTab === key ? 'text-blue-400 bg-[#282828] shadow-sm' : 'text-gray-400 hover:text-white hover:bg-white/5'} ${language === 'en' ? 'lg:text-left text-center' : 'lg:text-right text-center'}`}
                                                 >
                                                     <span className="relative z-10">{currentTabs[key]}</span>
                                                 </button>
 
-                                                {/* زیرمنوهای نمونه کار (باز شدن عمودی در زیر همان تب برای موبایل و دسکتاپ) */}
                                                 {key === 'portfolio' && (
                                                     <div className={`overflow-hidden transition-all duration-500 ease-in-out flex flex-col items-stretch w-full lg:px-2 ${activeTab === 'portfolio' ? 'max-h-[250px] opacity-100 mt-1 lg:my-2' : 'max-h-0 opacity-0 mt-0 m-0'}`}>
-                                                        <div className={`flex flex-col gap-1 items-stretch ${language === 'fa' ? 'border-r-2 border-gray-200/60 pr-2 mr-2' : 'border-l-2 border-gray-200/60 pl-2 ml-2'}`}>
+                                                        <div className={`flex flex-col gap-1 items-stretch ${language === 'fa' ? 'border-r-2 border-gray-700/60 pr-2 mr-2' : 'border-l-2 border-gray-700/60 pl-2 ml-2'}`}>
                                                             {Object.keys(currentFilters).map((filterKey) => (
                                                                 <button
                                                                     key={filterKey}
                                                                     onClick={(e) => { e.stopPropagation(); setActiveFilter(filterKey); }}
-                                                                    className={`text-[10px] lg:text-xs font-bold py-1.5 lg:py-2 px-2 lg:px-3 rounded-lg transition-all whitespace-nowrap shrink-0 w-full text-center ${language === 'en' ? 'text-left' : 'text-right'} ${activeFilter === filterKey ? 'text-[#0000fc] bg-blue-50/50' : 'text-gray-400 hover:text-gray-700 hover:bg-gray-100/50'}`}
+                                                                    className={`text-[10px] lg:text-xs font-bold py-1.5 lg:py-2 px-2 lg:px-3 rounded-lg transition-all whitespace-nowrap shrink-0 w-full text-center ${language === 'en' ? 'text-left' : 'text-right'} ${activeFilter === filterKey ? 'text-blue-400 bg-blue-500/10' : 'text-gray-500 hover:text-white hover:bg-white/5'}`}
                                                                 >
                                                                     {currentFilters[filterKey]}
                                                                 </button>
@@ -305,30 +309,28 @@
                                                 )}
                                             </div>
 
-                                            {/* خط جداکننده */}
                                             {index < Object.keys(currentTabs).length - 1 && (
-                                                <div className="w-px h-4 lg:w-full lg:h-px bg-gray-200/50 mx-1 lg:mx-0 lg:my-1 shrink-0 mt-2.5 lg:mt-0"></div>
+                                                <div className="w-px h-4 lg:w-full lg:h-px bg-gray-700/50 mx-1 lg:mx-0 lg:my-1 shrink-0 mt-2.5 lg:mt-0"></div>
                                             )}
                                         </React.Fragment>
                                     ))}
                                 </nav>
                             </div>
 
-                            {/* ردیف سوم: دکمه تماس با من */}
-                            <div className="hidden lg:block relative shrink-0 pt-4 pb-6 px-6 z-20 mt-auto bg-[#f2f3f5]">
+                            <div className="hidden lg:block relative shrink-0 pt-4 pb-6 px-6 z-20 mt-auto bg-[#1e1e1e]">
                                 <div className="flex flex-col relative w-full items-center">
                                     <button 
                                         onClick={() => setShowPhone(!showPhone)}
-                                        className="group relative z-10 flex items-center justify-between w-full h-11 px-4 bg-black text-white text-[13px] font-bold rounded-xl hover:bg-gray-900 transition-all duration-300 shadow-md shadow-black/5"
+                                        className="group relative z-10 flex items-center justify-between w-full h-11 px-4 bg-white text-black text-[13px] font-bold rounded-xl hover:bg-gray-200 transition-all duration-300 shadow-md"
                                     >
                                         <span>{currentUI.contact}</span>
                                         <ChevronLeft className={`w-4 h-4 transition-transform duration-300 ${showPhone ? '-rotate-90' : (language === 'fa' ? 'rotate-0' : 'rotate-180')}`} />
                                     </button>
                                     
                                     <div className={`w-full overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${showPhone ? 'max-h-16 opacity-100 mt-2' : 'max-h-0 opacity-0 mt-0'}`}>
-                                        <div className="bg-white h-11 px-4 rounded-xl flex items-center gap-3 border border-gray-100 shadow-sm w-full">
-                                            <div className="w-6 h-6 rounded-md bg-gray-50 flex items-center justify-center text-gray-400 shrink-0"><Phone /></div>
-                                            <a href="tel:+989127373158" className="text-gray-900 font-bold tracking-widest text-[13px] hover:text-[#0000fc] transition-colors mt-0.5" dir="ltr">
+                                        <div className="bg-[#282828] h-11 px-4 rounded-xl flex items-center gap-3 border border-gray-700 shadow-sm w-full">
+                                            <div className="w-6 h-6 rounded-md bg-[#1e1e1e] flex items-center justify-center text-gray-400 shrink-0"><Phone /></div>
+                                            <a href="tel:+989127373158" className="text-white font-bold tracking-widest text-[13px] hover:text-blue-400 transition-colors mt-0.5" dir="ltr">
                                                 {currentUI.phoneText}
                                             </a>
                                         </div>
@@ -337,12 +339,11 @@
                             </div>
                         </aside>
 
-                        {/* بخش اصلی محتوا */}
+                        {}
                         <main className="flex-1 w-full relative min-w-0 px-4 pb-12 lg:px-0 mt-4 lg:mt-0">
                             
-                            {/* ماسک گرادیانت و باکس عنوان */}
-                            <div className="sticky top-0 z-30 pt-0 bg-[#fafafa]">
-                                <div className="pt-2 lg:pt-4 bg-[#fafafa]">
+                            <div className="sticky top-0 z-30 pt-0 bg-[#121212]">
+                                <div className="pt-2 lg:pt-4 bg-[#121212]">
                                     <div 
                                         className={`h-11 bg-[#0000fc] rounded-xl flex items-center px-4 overflow-hidden transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${language === 'fa' ? 'origin-right' : 'origin-left'}`}
                                         style={{ width: titleWidths[language][currentTitleKey] || '200px' }}
@@ -352,17 +353,16 @@
                                         </h2>
                                     </div>
                                 </div>
-                                <div className="h-6 bg-gradient-to-b from-[#fafafa] to-transparent pointer-events-none"></div>
+                                <div className="h-6 bg-gradient-to-b from-[#121212] to-transparent pointer-events-none"></div>
                             </div>
 
-                            {/* محتوای متغیر */}
-                            <div className="bg-[#f2f3f5] rounded-2xl w-full overflow-hidden transition-[height] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] relative" style={{ height: boxHeight }}>
+                            <div className="bg-[#1e1e1e] rounded-2xl w-full overflow-hidden transition-[height] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] relative" style={{ height: boxHeight }}>
                                 <div ref={contentRef} className="p-6 sm:p-8 absolute top-0 left-0 right-0 w-full">
                                     
                                     {activeTab === 'about' && (
                                         <div style={{ animation: 'slideUp 0.7s ease-out, fadeIn 0.7s ease-out' }}>
-                                            <h3 className="text-xl font-black text-gray-900 mb-4">{currentTabs.about}</h3>
-                                            <div className="prose prose-gray max-w-none text-gray-600 leading-relaxed text-sm sm:text-base">
+                                            <h3 className="text-xl font-black text-white mb-4">{currentTabs.about}</h3>
+                                            <div className="prose prose-invert max-w-none text-gray-400 leading-relaxed text-sm sm:text-base">
                                                 <p>متن آزمایشی درباره من...</p>
                                             </div>
                                         </div>
@@ -370,16 +370,16 @@
 
                                     {activeTab === 'experience' && (
                                         <div style={{ animation: 'slideUp 0.7s ease-out, fadeIn 0.7s ease-out' }}>
-                                            <div className="flex flex-col gap-8 relative before:content-[''] before:absolute before:top-2 before:bottom-2 before:w-px before:bg-gray-200 before:-mx-4 sm:before:-mx-6">
+                                            <div className="flex flex-col gap-8 relative before:content-[''] before:absolute before:top-2 before:bottom-2 before:w-px before:bg-gray-700 before:-mx-4 sm:before:-mx-6">
                                                 {experienceItems.map((item) => (
                                                     <div key={item.id} className="relative z-10">
-                                                        <div className={`absolute top-2 w-2 h-2 rounded-full bg-[#0000fc] ring-4 ring-[#f2f3f5] -mx-[19.5px] sm:-mx-[27.5px] ${language === 'fa' ? 'right-0' : 'left-0'}`}></div>
+                                                        <div className={`absolute top-2 w-2 h-2 rounded-full bg-[#0000fc] ring-4 ring-[#1e1e1e] -mx-[19.5px] sm:-mx-[27.5px] ${language === 'fa' ? 'right-0' : 'left-0'}`}></div>
                                                         <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 sm:gap-4 mb-2">
-                                                            <h4 className="text-gray-900 font-bold text-base">{item.role[language]}</h4>
-                                                            <span className="text-gray-400 text-xs font-medium shrink-0 bg-white px-2 py-1 rounded-md border border-gray-100">{item.duration[language]}</span>
+                                                            <h4 className="text-white font-bold text-base">{item.role[language]}</h4>
+                                                            <span className="text-gray-300 text-xs font-medium shrink-0 bg-[#282828] px-2 py-1 rounded-md border border-gray-700">{item.duration[language]}</span>
                                                         </div>
-                                                        <h5 className="text-[#0000fc] text-sm font-bold mb-3">{item.company[language]}</h5>
-                                                        <p className="text-gray-500 text-sm leading-relaxed">{item.desc[language]}</p>
+                                                        <h5 className="text-blue-400 text-sm font-bold mb-3">{item.company[language]}</h5>
+                                                        <p className="text-gray-400 text-sm leading-relaxed">{item.desc[language]}</p>
                                                     </div>
                                                 ))}
                                             </div>
@@ -387,18 +387,18 @@
                                     )}
 
                                     {activeTab === 'portfolio' && (
-                                        <div key={`portfolio-${activeFilter}`} style={{ animation: 'slideUp 0.7s ease-out, fadeIn 0.7s ease-out' }} className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                                        <div key={`portfolio-${activeFilter}`} style={{ animation: 'zoomIn 0.5s cubic-bezier(0.16,1,0.3,1), fadeIn 0.5s ease-out' }} className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                                             {filteredPortfolio.map((item) => (
                                                 <div 
                                                     key={item.id} 
                                                     onClick={() => setSelectedProject(item)}
-                                                    className="group relative rounded-2xl overflow-hidden bg-white shadow-sm border border-gray-100 hover:shadow-md transition-all cursor-pointer"
+                                                    className="group relative rounded-2xl overflow-hidden bg-[#282828] shadow-sm border border-gray-800 hover:border-gray-600 transition-all cursor-pointer"
                                                 >
-                                                    <div className="aspect-[4/3] w-full overflow-hidden relative bg-gray-900">
+                                                    <div className="aspect-[4/3] w-full overflow-hidden relative bg-black">
                                                         <img src={item.thumbnail} alt={item.title[language]} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out opacity-90 group-hover:opacity-100" />
                                                         
                                                         {item.type === 'video' && (
-                                                            <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/10 transition-colors">
+                                                            <div className="absolute inset-0 flex items-center justify-center bg-black/40 group-hover:bg-black/20 transition-colors">
                                                                 <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/30 group-hover:scale-110 transition-transform">
                                                                     <Play />
                                                                 </div>
@@ -406,10 +406,10 @@
                                                         )}
                                                     </div>
                                                     <div className="p-4 sm:p-5">
-                                                        <span className="text-[10px] sm:text-xs font-bold text-[#0000fc] bg-blue-50 px-2 py-1 rounded-md mb-2 inline-block">
+                                                        <span className="text-[10px] sm:text-xs font-bold text-blue-400 bg-blue-500/10 px-2 py-1 rounded-md mb-2 inline-block">
                                                             {currentFilters[item.category]}
                                                         </span>
-                                                        <h4 className="text-gray-900 font-bold text-sm sm:text-base group-hover:text-[#0000fc] transition-colors">{item.title[language]}</h4>
+                                                        <h4 className="text-white font-bold text-sm sm:text-base group-hover:text-blue-400 transition-colors">{item.title[language]}</h4>
                                                     </div>
                                                 </div>
                                             ))}
@@ -418,59 +418,59 @@
 
                                     {activeTab === 'education' && (
                                         <div style={{ animation: 'slideUp 0.7s ease-out, fadeIn 0.7s ease-out' }}>
-                                            <p className="text-gray-600">{language === 'fa' ? 'بخش آموزش‌ها...' : 'Education section...'}</p>
+                                            <p className="text-gray-400">{language === 'fa' ? 'بخش آموزش‌ها...' : 'Education section...'}</p>
                                         </div>
                                     )}
 
                                     {activeTab === 'skills' && (
                                         <div style={{ animation: 'slideUp 0.7s ease-out, fadeIn 0.7s ease-out' }}>
-                                            <p className="text-gray-600">{language === 'fa' ? 'بخش مهارت‌ها...' : 'Skills section...'}</p>
+                                            <p className="text-gray-400">{language === 'fa' ? 'بخش مهارت‌ها...' : 'Skills section...'}</p>
                                         </div>
                                     )}
                                 </div>
                             </div>
                         </main>
                         
-                        {/* مودال نمایش پروژه */}
+                        {}
                         {selectedProject && (
                             <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-12">
                                 <div 
-                                    className="absolute inset-0 bg-black/60 backdrop-blur-sm" 
+                                    className="absolute inset-0 bg-black/80 backdrop-blur-sm" 
                                     onClick={closeModal}
                                     style={{ animation: isClosing ? 'fadeOut 0.3s forwards' : 'fadeIn 0.3s ease-out' }}
                                 ></div>
                                 
                                 <div 
-                                    className="bg-white w-full max-w-5xl max-h-[90vh] rounded-2xl sm:rounded-3xl shadow-2xl relative z-10 flex flex-col overflow-hidden"
+                                    className="bg-[#1e1e1e] w-full max-w-5xl max-h-[90vh] rounded-2xl sm:rounded-3xl shadow-2xl relative z-10 flex flex-col overflow-hidden border border-gray-800"
                                     style={{ animation: isClosing ? 'slideDownOut 0.3s forwards, fadeOut 0.3s forwards' : 'slideUp 0.5s ease-out, zoomIn 0.5s ease-out' }}
                                 >
-                                    <div className="flex items-center justify-between p-4 sm:p-5 border-b border-gray-100 shrink-0">
+                                    <div className="flex items-center justify-between p-4 sm:p-5 border-b border-gray-800 shrink-0">
                                         <div className="flex flex-col">
-                                            <h3 className="font-black text-gray-900 text-lg sm:text-xl">{selectedProject.title[language]}</h3>
-                                            <span className="text-[#0000fc] text-xs font-bold mt-1">{currentFilters[selectedProject.category]}</span>
+                                            <h3 className="font-black text-white text-lg sm:text-xl">{selectedProject.title[language]}</h3>
+                                            <span className="text-blue-400 text-xs font-bold mt-1">{currentFilters[selectedProject.category]}</span>
                                         </div>
-                                        <button onClick={closeModal} className="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center hover:bg-gray-100 transition-colors shrink-0">
+                                        <button onClick={closeModal} className="w-10 h-10 rounded-xl bg-[#282828] flex items-center justify-center hover:bg-[#333] transition-colors shrink-0">
                                             <X />
                                         </button>
                                     </div>
                                     
-                                    <div className="flex-1 overflow-y-auto bg-gray-50 p-4 sm:p-6 flex flex-col items-center">
+                                    <div className="flex-1 overflow-y-auto bg-[#121212] p-4 sm:p-6 flex flex-col items-center">
                                         {selectedProject.type === 'video' ? (
-                                            <div className="w-full rounded-xl overflow-hidden shadow-sm bg-black aspect-video max-w-4xl">
+                                            <div className="w-full rounded-xl overflow-hidden shadow-sm bg-black aspect-video max-w-4xl border border-gray-800">
                                                 <video controls autoPlay className="w-full h-full object-contain">
                                                     <source src={selectedProject.mediaUrl} type="video/mp4" />
                                                     Your browser does not support the video tag.
                                                 </video>
                                             </div>
                                         ) : (
-                                            <div className="w-full rounded-xl overflow-hidden shadow-sm max-w-4xl">
+                                            <div className="w-full rounded-xl overflow-hidden shadow-sm max-w-4xl border border-gray-800">
                                                 <img src={selectedProject.mediaUrl} alt={selectedProject.title[language]} className="w-full h-auto object-contain" />
                                             </div>
                                         )}
                                         
-                                        <div className="w-full max-w-4xl mt-6 sm:mt-8 bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                                            <h4 className="font-bold text-gray-900 mb-2">{language === 'fa' ? 'درباره این پروژه' : 'About this project'}</h4>
-                                            <p className="text-gray-600 leading-relaxed text-sm sm:text-base">{selectedProject.desc[language]}</p>
+                                        <div className="w-full max-w-4xl mt-6 sm:mt-8 bg-[#1e1e1e] p-6 rounded-xl shadow-sm border border-gray-800">
+                                            <h4 className="font-bold text-white mb-2">{language === 'fa' ? 'درباره این پروژه' : 'About this project'}</h4>
+                                            <p className="text-gray-400 leading-relaxed text-sm sm:text-base">{selectedProject.desc[language]}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -479,11 +479,6 @@
                         
                         <style>
                             {`
-                            /* اجبار مرورگرهای موبایل به استفاده از فونت صحیح روی همه عناصر */
-                            * {
-                                font-family: ${language === 'fa' ? '"Modam", "Vazirmatn", "Inter", sans-serif' : '"Inter", "Modam", "Vazirmatn", sans-serif'} !important;
-                            }
-
                             @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
                             @keyframes slideDownOut { from { transform: translateY(0); } to { transform: translateY(20px); } }
                             @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
