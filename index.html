@@ -112,7 +112,7 @@
                     },
                     ui: {
                         contact: "ارتباط با من",
-                        phoneText: "۰۹۱۲ ۳۴۵ ۶۷۸۹", // شماره تلفن خود را جایگزین کنید
+                        phoneText: "۰۹۱۲ ۷۳ ۷۳ ۱۵۸", // شماره تلفن خود را جایگزین کنید
                     },
                     tabs: {
                         about: "درباره من",
@@ -135,7 +135,7 @@
                     },
                     ui: {
                         contact: "Contact Me",
-                        phoneText: "+98 912 345 6789", // شماره تلفن خود را جایگزین کنید
+                        phoneText: "+98 912 73 73 158", // شماره تلفن خود را جایگزین کنید
                     },
                     tabs: {
                         about: "About Me",
@@ -232,8 +232,8 @@
             ];
 
             const experienceItems = [
-                { id: 1, role: { fa: "طراح ارشد گرافیک", en: "Senior Graphic Designer" }, company: { fa: "آژانس تبلیغاتی", en: "Ad Agency" }, duration: "1401 - تاکنون", desc: { fa: "طراحی کمپین‌های تبلیغاتی ۳۶۰ درجه برای برندهای معتبر.", en: "Designing 360-degree ad campaigns for top brands." } },
-                { id: 2, role: { fa: "موشن دیزاینر", en: "Motion Designer" }, company: { fa: "استودیو خلاق", en: "Creative Studio" }, duration: "1399 - 1401", desc: { fa: "تولید بیش از ۵۰ دقیقه انیمیشن دو بعدی و تیزر تبلیغاتی.", en: "Producing over 50 minutes of 2D animation and promos." } },
+                { id: 1, role: { fa: "طراح ارشد گرافیک", en: "Senior Graphic Designer" }, company: { fa: "آژانس تبلیغاتی", en: "Ad Agency" }, duration: { fa: "۱۴۰۱ - تاکنون", en: "2022 - Present" }, desc: { fa: "طراحی کمپین‌های تبلیغاتی ۳۶۰ درجه برای برندهای معتبر.", en: "Designing 360-degree ad campaigns for top brands." } },
+                { id: 2, role: { fa: "موشن دیزاینر", en: "Motion Designer" }, company: { fa: "استودیو خلاق", en: "Creative Studio" }, duration: { fa: "۱۳۹۹ - ۱۴۰۱", en: "2020 - 2022" }, desc: { fa: "تولید بیش از ۵۰ دقیقه انیمیشن دو بعدی و تیزر تبلیغاتی.", en: "Producing over 50 minutes of 2D animation and promos." } },
             ];
 
             const filteredPortfolio = activeFilter === 'all' 
@@ -328,7 +328,7 @@
                                     <div className={`w-full overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${showPhone ? 'max-h-16 opacity-100 mt-2' : 'max-h-0 opacity-0 mt-0'}`}>
                                         <div className="bg-white h-11 px-4 rounded-xl flex items-center gap-3 border border-gray-100 shadow-sm w-full">
                                             <div className="w-6 h-6 rounded-md bg-gray-50 flex items-center justify-center text-gray-400 shrink-0"><Phone /></div>
-                                            <a href="tel:+989123456789" className="text-gray-900 font-bold tracking-widest text-[13px] hover:text-[#0000fc] transition-colors mt-0.5" dir="ltr">
+                                            <a href="tel:+989127373158" className="text-gray-900 font-bold tracking-widest text-[13px] hover:text-[#0000fc] transition-colors mt-0.5" dir="ltr">
                                                 {currentUI.phoneText}
                                             </a>
                                         </div>
@@ -376,7 +376,7 @@
                                                         <div className={`absolute top-2 w-2 h-2 rounded-full bg-[#0000fc] ring-4 ring-[#f2f3f5] -mx-[19.5px] sm:-mx-[27.5px] ${language === 'fa' ? 'right-0' : 'left-0'}`}></div>
                                                         <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 sm:gap-4 mb-2">
                                                             <h4 className="text-gray-900 font-bold text-base">{item.role[language]}</h4>
-                                                            <span className="text-gray-400 text-xs font-medium shrink-0 bg-white px-2 py-1 rounded-md border border-gray-100">{item.duration}</span>
+                                                            <span className="text-gray-400 text-xs font-medium shrink-0 bg-white px-2 py-1 rounded-md border border-gray-100">{item.duration[language]}</span>
                                                         </div>
                                                         <h5 className="text-[#0000fc] text-sm font-bold mb-3">{item.company[language]}</h5>
                                                         <p className="text-gray-500 text-sm leading-relaxed">{item.desc[language]}</p>
