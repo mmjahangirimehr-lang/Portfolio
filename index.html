@@ -15,16 +15,10 @@
     <!-- Babel (برای ترجمه کدهای ری‌اکت در مرورگر) -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-    <!-- Google Fonts (Inter) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
-
     <style>
         /* 
          * فراخوانی فونت مدام (Modam)
-         * مهم: برای اینکه این فونت کار کند، باید فایل‌های فونت زیر را 
-         * دقیقاً با همین نام‌ها در کنار فایل index.html در گیت‌هاب آپلود کنید.
+         * مهم: این فایل‌ها باید در کنار index.html در گیت‌هاب آپلود شوند.
          */
         @font-face {
             font-family: 'Modam';
@@ -53,6 +47,9 @@
             font-display: swap;
         }
 
+        /* فونت Inter برای زبان انگلیسی */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap');
+
         /* رزرو جایگاه اسکرول‌بار برای جلوگیری از پرش صفحه */
         html, body {
             overflow-y: scroll !important;
@@ -65,6 +62,7 @@
         /* استایل اختصاصی اسکرول‌بار */
         ::-webkit-scrollbar {
             width: 8px;
+            height: 4px; /* برای اسکرول افقی در موبایل */
         }
         ::-webkit-scrollbar-track {
             background: #fafafa;
@@ -84,7 +82,6 @@
     </style>
 </head>
 <body class="bg-[#fafafa]">
-    <!-- روت اصلی برای سوار شدن ری‌اکت -->
     <div id="root"></div>
 
     <script type="text/babel">
@@ -108,7 +105,7 @@
                     filters: { all: "همه", graphic: "طراحی گرافیک", motion: "موشن گرافیک", logo: "طراحی لوگو" }
                 },
                 en: {
-                    profile: { name: "Mohammadmehdi Jahangirimehr", title: "Graphic & Motion Designer" },
+                    profile: { name: "mm.jahangirimehr", title: "Graphic & Motion Designer" },
                     ui: { contact: "Contact Me", phoneText: "+98 912 737 3158" },
                     tabs: { about: "About Me", experience: "Experience", portfolio: "Portfolio", education: "Education", skills: "Skills" },
                     filters: { all: "All", graphic: "Graphic Design", motion: "Motion Graphics", logo: "Logo Design" }
@@ -152,7 +149,6 @@
 
             const handleCloseModal = () => {
                 setIsClosing(true);
-                // صبر کردن به مدت 300 میلی‌ثانیه برای اجرای انیمیشن خروج، سپس حذف کردن مدال
                 setTimeout(() => {
                     setSelectedProject(null);
                     setIsClosing(false);
@@ -160,46 +156,15 @@
             };
 
             const portfolioItems = [
-                { 
-                    id: 1, 
-                    category: 'motion', 
-                    type: 'video',
-                    title: { fa: "موشن گرافیک تبلیغاتی اپل", en: "Apple Commercial Motion" }, 
-                    thumbnail: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=600", 
-                    videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4",
-                    desc: { fa: "طراحی و متحرک‌سازی ویدیوی تبلیغاتی مینیمال برای معرفی ویژگی‌های جدید محصول. استفاده از افترافکت برای خلق حرکت‌های نرم و جذاب.", en: "Designing and animating a minimal commercial video to introduce new product features. Used After Effects to create smooth, engaging motions." }
-                },
-                { 
-                    id: 2, 
-                    category: 'graphic', 
-                    type: 'image',
-                    title: { fa: "طراحی پوستر فستیوال هنر", en: "Art Festival Poster" }, 
-                    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=600",
-                    desc: { fa: "طراحی پوستر خلاقانه برای رویداد بین‌المللی با تمرکز بر تایپوگرافی مدرن و پالت رنگی جسورانه.", en: "Creative poster design for an international event focusing on modern typography and a bold color palette." }
-                },
-                { 
-                    id: 3, 
-                    category: 'logo', 
-                    type: 'image',
-                    title: { fa: "هویت بصری استارتاپ تک", en: "Tech Startup Identity" }, 
-                    image: "https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&q=80&w=600",
-                    desc: { fa: "طراحی لوگو، تایپوگرافی سازمانی و پالت رنگی برای یک استارتاپ فین‌تک با رویکرد القای حس اعتماد و سرعت.", en: "Logo design, corporate typography, and color palette for a fintech startup aiming to convey trust and speed." }
-                },
-                { 
-                    id: 4, 
-                    category: 'motion', 
-                    type: 'video',
-                    title: { fa: "انیمیشن معرفی اپلیکیشن", en: "App Explainer Animation" }, 
-                    thumbnail: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=600",
-                    videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4",
-                    desc: { fa: "ساخت ویدیوی موشن گرافیک دو بعدی فلت برای آموزش نحوه ثبت‌نام و استفاده از خدمات اپلیکیشن.", en: "Creating a 2D flat motion graphics video to explain the registration process and app services." }
-                },
+                { id: 1, category: 'motion', type: 'video', title: { fa: "موشن گرافیک تبلیغاتی اپل", en: "Apple Commercial Motion" }, thumbnail: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=600", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", desc: { fa: "طراحی و متحرک‌سازی ویدیوی تبلیغاتی مینیمال...", en: "Designing and animating a minimal commercial video..." } },
+                { id: 2, category: 'graphic', type: 'image', title: { fa: "طراحی پوستر فستیوال هنر", en: "Art Festival Poster" }, image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=600", desc: { fa: "طراحی پوستر خلاقانه برای رویداد بین‌المللی...", en: "Creative poster design for an international event..." } },
+                { id: 3, category: 'logo', type: 'image', title: { fa: "هویت بصری استارتاپ تک", en: "Tech Startup Identity" }, image: "https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&q=80&w=600", desc: { fa: "طراحی لوگو، تایپوگرافی سازمانی و پالت رنگی...", en: "Logo design, corporate typography, and color palette..." } },
+                { id: 4, category: 'motion', type: 'video', title: { fa: "انیمیشن معرفی اپلیکیشن", en: "App Explainer Animation" }, thumbnail: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=600", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", desc: { fa: "ساخت ویدیوی موشن گرافیک دو بعدی فلت...", en: "Creating a 2D flat motion graphics video..." } },
             ];
 
             const experienceItems = [
                 { id: 1, role: { fa: "طراح ارشد رابط کاربری", en: "Senior UI Designer" }, company: { fa: "شرکت فناوری فلان", en: "Tech Corp" }, duration: "1401 - تاکنون", desc: { fa: "طراحی و توسعه دیزاین سیستم جامع برای محصولات سازمانی.", en: "Designing and developing a comprehensive design system for enterprise products." } },
                 { id: 2, role: { fa: "طراح UX", en: "UX Designer" }, company: { fa: "استارتاپ بهمان", en: "Startup Inc" }, duration: "1399 - 1401", desc: { fa: "بهبود تجربه کاربری و افزایش نرخ تبدیل کاربر تا ۴۰ درصد.", en: "Improving user experience and increasing user conversion rate by 40%." } },
-                { id: 3, role: { fa: "توسعه‌دهنده فرانت‌اند", en: "Frontend Developer" }, company: { fa: "آژانس خلاقیت بیسار", en: "Creative Agency" }, duration: "1397 - 1399", desc: { fa: "پیاده‌سازی رابط‌های کاربری تعاملی با React و Tailwind.", en: "Implementing interactive UIs using React and Tailwind." } },
             ];
 
             const filteredPortfolio = activeFilter === 'all' ? portfolioItems : portfolioItems.filter(item => item.category === activeFilter);
@@ -212,27 +177,32 @@
                 >
                     <div className="w-full max-w-6xl p-4 sm:p-6 md:p-8 flex flex-col lg:flex-row gap-6 md:gap-8 lg:gap-10 relative items-start">
                         
-                        {}
-                        <aside className="w-full lg:w-[280px] shrink-0 bg-[#f2f3f5] rounded-2xl flex flex-col sticky top-4 sm:top-6 lg:top-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] h-[calc(100vh-2rem)] sm:h-[calc(100vh-3rem)] lg:h-[calc(100vh-4rem)] z-40 overflow-hidden">
-                            <div className="p-6 shrink-0 flex flex-col gap-6 relative z-20">
-                                <div className="flex justify-between items-center w-full">
+                        {/* سایدبار: در موبایل افقی و در بالا، در دکمه عمودی و ثابت */}
+                        <aside className="w-full lg:w-[280px] shrink-0 bg-[#f2f3f5] rounded-2xl flex flex-col relative lg:sticky lg:top-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] h-auto lg:h-[calc(100vh-4rem)] z-40 overflow-hidden transition-all duration-300">
+                            
+                            {/* ردیف اول: پروفایل و تغییر زبان */}
+                            <div className="p-4 lg:p-6 shrink-0 flex flex-row lg:flex-col justify-between items-center lg:items-stretch gap-4 relative z-20">
+                                {/* پروفایل */}
+                                <div className="order-1 lg:order-2 flex items-center gap-2 lg:gap-3 bg-white p-2 lg:p-3 rounded-2xl shadow-sm flex-1 lg:flex-none min-w-0">
+                                    <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-xl bg-gradient-to-br from-[#0000fc] to-blue-400 overflow-hidden shrink-0 shadow-sm"></div>
+                                    <div className="flex flex-col min-w-0">
+                                        <h1 className="text-gray-900 font-black text-[11px] lg:text-sm truncate">{currentContent.profile.name}</h1>
+                                        <p className="text-gray-500 text-[9px] lg:text-[11px] truncate mt-0.5">{currentContent.profile.title}</p>
+                                    </div>
+                                </div>
+
+                                {/* تغییر زبان */}
+                                <div className="order-2 lg:order-1 flex justify-between items-center w-auto lg:w-full shrink-0">
                                     <div className="flex gap-1 bg-white p-1 rounded-xl shadow-sm">
-                                        <button onClick={() => setLanguage('fa')} className={`px-3 py-1 text-xs font-bold rounded-lg transition-colors ${language === 'fa' ? 'bg-[#0000fc] text-white' : 'text-gray-500 hover:bg-gray-50'}`}>فارسی</button>
-                                        <button onClick={() => setLanguage('en')} className={`px-3 py-1 text-xs font-bold rounded-lg transition-colors ${language === 'en' ? 'bg-[#0000fc] text-white' : 'text-gray-500 hover:bg-gray-50'}`}>English</button>
+                                        <button onClick={() => setLanguage('fa')} className={`px-2 lg:px-3 py-1 text-[10px] lg:text-xs font-bold rounded-lg transition-colors ${language === 'fa' ? 'bg-[#0000fc] text-white' : 'text-gray-500 hover:bg-gray-50'}`}>فارسی</button>
+                                        <button onClick={() => setLanguage('en')} className={`px-2 lg:px-3 py-1 text-[10px] lg:text-xs font-bold rounded-lg transition-colors ${language === 'en' ? 'bg-[#0000fc] text-white' : 'text-gray-500 hover:bg-gray-50'}`}>English</button>
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="flex-1 overflow-y-auto px-6 pb-6 scrollbar-hide relative z-10 flex flex-col gap-6">
-                                <div className="flex items-center gap-3 bg-white p-3 rounded-2xl shadow-sm">
-                                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#0000fc] to-blue-400 overflow-hidden shrink-0 shadow-sm"></div>
-                                    <div className="flex flex-col min-w-0">
-                                        <h1 className="text-gray-900 font-black text-sm truncate">{currentContent.profile.name}</h1>
-                                        <p className="text-gray-500 text-[11px] truncate mt-0.5">{currentContent.profile.title}</p>
-                                    </div>
-                                </div>
-
-                                <nav className="flex flex-col">
+                            {/* ردیف دوم: منوها (اسکرول افقی در موبایل) */}
+                            <div className="flex-none lg:flex-1 overflow-x-auto lg:overflow-y-auto px-4 lg:px-6 pb-2 lg:pb-6 scrollbar-hide relative z-10 w-full">
+                                <nav className="flex flex-row lg:flex-col items-center lg:items-stretch gap-1 lg:gap-0 w-max lg:w-full">
                                     {Object.keys(currentTabs).map((key, index) => (
                                         <React.Fragment key={key}>
                                             <button
@@ -240,19 +210,20 @@
                                                     setActiveTab(key);
                                                     if (key !== 'portfolio') setActiveFilter('all');
                                                 }}
-                                                className={`relative group px-4 py-3 text-sm font-bold rounded-xl transition-all duration-300 ${activeTab === key ? 'text-[#0000fc] bg-white shadow-sm' : 'text-gray-500 hover:text-gray-900 hover:bg-white/50'} ${language === 'en' ? 'text-left' : 'text-right'}`}
+                                                className={`relative group px-3 py-2 lg:px-4 lg:py-3 text-[11px] lg:text-sm font-bold rounded-xl transition-all duration-300 whitespace-nowrap shrink-0 ${activeTab === key ? 'text-[#0000fc] bg-white shadow-sm' : 'text-gray-500 hover:text-gray-900 hover:bg-white/50'} ${language === 'en' ? 'lg:text-left text-center' : 'lg:text-right text-center'}`}
                                             >
                                                 <span className="relative z-10">{currentTabs[key]}</span>
                                             </button>
 
+                                            {/* زیرمنوهای نمونه کار */}
                                             {key === 'portfolio' && (
-                                                <div className={`overflow-hidden transition-all duration-500 ease-in-out px-2 ${activeTab === 'portfolio' ? 'max-h-60 opacity-100 my-2' : 'max-h-0 opacity-0 my-0'}`}>
-                                                    <div className={`flex flex-col gap-1 ${language === 'fa' ? 'border-r-2 border-gray-200/60 mr-2 pr-2' : 'border-l-2 border-gray-200/60 ml-2 pl-2'}`}>
+                                                <div className={`overflow-hidden transition-all duration-500 ease-in-out flex items-center lg:items-stretch lg:px-2 ${activeTab === 'portfolio' ? 'max-w-[400px] max-h-[40px] lg:max-w-none lg:max-h-60 opacity-100 mx-1 lg:mx-0 lg:my-2' : 'max-w-0 max-h-0 opacity-0 m-0'}`}>
+                                                    <div className={`flex flex-row lg:flex-col gap-1 items-center lg:items-stretch ${language === 'fa' ? 'border-r-2 border-gray-200/60 pr-2 lg:mr-2' : 'border-l-2 border-gray-200/60 pl-2 lg:ml-2'}`}>
                                                         {Object.keys(currentFilters).map((filterKey) => (
                                                             <button
                                                                 key={filterKey}
                                                                 onClick={(e) => { e.stopPropagation(); setActiveFilter(filterKey); }}
-                                                                className={`text-xs font-bold py-2 px-3 rounded-lg transition-all ${language === 'en' ? 'text-left' : 'text-right'} ${activeFilter === filterKey ? 'text-[#0000fc] bg-blue-50/50' : 'text-gray-400 hover:text-gray-700 hover:bg-gray-100/50'}`}
+                                                                className={`text-[10px] lg:text-xs font-bold py-1.5 lg:py-2 px-2 lg:px-3 rounded-lg transition-all whitespace-nowrap shrink-0 ${language === 'en' ? 'lg:text-left text-center' : 'lg:text-right text-center'} ${activeFilter === filterKey ? 'text-[#0000fc] bg-blue-50/50' : 'text-gray-400 hover:text-gray-700 hover:bg-gray-100/50'}`}
                                                             >
                                                                 {currentFilters[filterKey]}
                                                             </button>
@@ -260,31 +231,33 @@
                                                     </div>
                                                 </div>
                                             )}
-                                            {index < Object.keys(currentTabs).length - 1 && (<div className="w-full h-px bg-gray-200/50 my-1"></div>)}
+                                            {/* خط جداکننده */}
+                                            {index < Object.keys(currentTabs).length - 1 && (<div className="w-px h-4 lg:w-full lg:h-px bg-gray-200/50 mx-1 lg:mx-0 lg:my-1 shrink-0"></div>)}
                                         </React.Fragment>
                                     ))}
                                 </nav>
                             </div>
 
-                            <div className="relative shrink-0 pt-4 pb-6 px-6 z-20 mt-auto bg-[#f2f3f5]">
-                                <div className="absolute top-0 left-0 right-0 h-8 bg-gradient-to-t from-[#f2f3f5] to-transparent pointer-events-none -mt-8"></div>
+                            {/* ردیف سوم: دکمه تماس با من */}
+                            <div className="relative shrink-0 p-4 lg:pt-4 lg:pb-6 lg:px-6 z-20 mt-auto bg-[#f2f3f5] border-t lg:border-t-0 border-gray-200/50">
+                                <div className="hidden lg:block absolute top-0 left-0 right-0 h-8 bg-gradient-to-t from-[#f2f3f5] to-transparent pointer-events-none -mt-8"></div>
                                 <div className="flex flex-col relative w-full items-center">
                                     <button 
                                         onClick={() => setShowPhone(!showPhone)}
-                                        className="group relative z-10 flex items-center justify-between w-full h-11 px-4 bg-black text-white text-[13px] font-bold rounded-xl hover:bg-gray-900 transition-all duration-300 shadow-md shadow-black/5"
+                                        className="group relative z-10 flex items-center justify-between w-full h-10 lg:h-11 px-4 bg-black text-white text-xs lg:text-[13px] font-bold rounded-xl hover:bg-gray-900 transition-all duration-300 shadow-md shadow-black/5"
                                     >
                                         <span>{currentUI.contact}</span>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`transition-transform duration-300 ${showPhone ? '-rotate-90' : (language === 'fa' ? 'rotate-0' : 'rotate-180')}`}>
-                                            <path d="m15 18-6-6 6-6"/>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`transition-transform duration-300 ${showPhone ? 'rotate-180' : 'rotate-0'}`}>
+                                            <path d="m6 9 6 6 6-6"/>
                                         </svg>
                                     </button>
                                     
                                     <div className={`w-full overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${showPhone ? 'max-h-16 opacity-100 mt-2' : 'max-h-0 opacity-0 mt-0'}`}>
-                                        <div className="bg-white h-11 px-4 rounded-xl flex items-center gap-3 border border-gray-100 shadow-sm w-full">
-                                            <div className="w-6 h-6 rounded-md bg-gray-50 flex items-center justify-center text-gray-400 shrink-0">
+                                        <div className="bg-white h-10 lg:h-11 px-4 rounded-xl flex items-center gap-3 border border-gray-100 shadow-sm w-full">
+                                            <div className="w-5 h-5 lg:w-6 lg:h-6 rounded-md bg-gray-50 flex items-center justify-center text-gray-400 shrink-0">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
                                             </div>
-                                            <a href="tel:+989127373158" className="text-gray-900 font-bold tracking-widest text-[13px] hover:text-[#0000fc] transition-colors mt-0.5" dir="ltr">
+                                            <a href="tel:+989127373158" className="text-gray-900 font-bold tracking-widest text-xs lg:text-[13px] hover:text-[#0000fc] transition-colors mt-0.5" dir="ltr">
                                                 {currentUI.phoneText}
                                             </a>
                                         </div>
@@ -293,50 +266,42 @@
                             </div>
                         </aside>
 
-                        {}
+                        {/* بوم اصلی محتوا */}
                         <main className="flex-1 w-full relative min-w-0 pb-12">
-                            <div className="sticky top-0 z-30 pt-0 bg-[#fafafa]">
-                                <div className="pt-4 bg-[#fafafa]">
-                                    <div 
-                                        className={`h-11 bg-[#0000fc] rounded-xl flex items-center px-4 overflow-hidden transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${language === 'fa' ? 'origin-right' : 'origin-left'}`}
-                                        style={{ width: titleWidths[language][currentTitleKey] || '200px' }}
-                                    >
-                                        <h2 key={currentTitleKey} className="text-white font-black text-xs sm:text-sm whitespace-nowrap animate-[fadeIn_0.5s_ease-out]">
-                                            {displayTitle}
-                                        </h2>
-                                    </div>
+                            <div className="sticky top-0 z-30 pt-0 lg:pt-4 bg-[#fafafa]">
+                                <div className="h-10 lg:h-11 bg-[#0000fc] rounded-xl flex items-center px-4 overflow-hidden transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]" style={{ width: titleWidths[language][currentTitleKey] || '200px' }}>
+                                    <h2 key={currentTitleKey} className="text-white font-black text-xs sm:text-sm whitespace-nowrap animate-[fadeIn_0.5s_ease-out]">
+                                        {displayTitle}
+                                    </h2>
                                 </div>
-                                <div className="h-6 bg-gradient-to-b from-[#fafafa] to-transparent pointer-events-none"></div>
+                                <div className="h-4 lg:h-6 bg-gradient-to-b from-[#fafafa] to-transparent pointer-events-none"></div>
                             </div>
 
-                            <div 
-                                className="bg-[#f2f3f5] rounded-2xl w-full overflow-hidden transition-[height] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] relative"
-                                style={{ height: boxHeight }}
-                            >
-                                <div ref={contentRef} className="p-6 sm:p-8 absolute top-0 left-0 right-0 w-full">
+                            <div className="bg-[#f2f3f5] rounded-2xl w-full overflow-hidden transition-[height] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] relative" style={{ height: boxHeight }}>
+                                <div ref={contentRef} className="p-5 lg:p-8 absolute top-0 left-0 right-0 w-full">
                                     
                                     {activeTab === 'about' && (
                                         <div className="animate-[slideUp_0.7s_ease-out]">
-                                            <h3 className="text-xl font-black text-gray-900 mb-4">{currentTabs.about}</h3>
-                                            <div className="prose prose-gray max-w-none text-gray-600 leading-relaxed text-sm sm:text-base">
-                                                <p>{language === 'fa' ? 'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد.' : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'}</p>
-                                                <p className="mt-4">{language === 'fa' ? 'کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد.' : 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.'}</p>
+                                            <h3 className="text-lg lg:text-xl font-black text-gray-900 mb-4">{currentTabs.about}</h3>
+                                            <div className="prose prose-gray max-w-none text-gray-600 leading-relaxed text-[13px] lg:text-base">
+                                                <p>{language === 'fa' ? 'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ است.' : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'}</p>
+                                                <p className="mt-4">{language === 'fa' ? 'شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان ایجاد کرد.' : 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum.'}</p>
                                             </div>
                                         </div>
                                     )}
 
                                     {activeTab === 'experience' && (
                                         <div className="animate-[slideUp_0.7s_ease-out]">
-                                            <div className="flex flex-col gap-8 relative before:content-[''] before:absolute before:top-2 before:bottom-2 before:w-px before:bg-gray-200 before:-mx-4 sm:before:-mx-6">
+                                            <div className="flex flex-col gap-6 lg:gap-8 relative before:content-[''] before:absolute before:top-2 before:bottom-2 before:w-px before:bg-gray-200 before:-mx-3 lg:before:-mx-6">
                                                 {experienceItems.map((item) => (
                                                     <div key={item.id} className="relative z-10">
-                                                        <div className={`absolute top-2 w-2 h-2 rounded-full bg-[#0000fc] ring-4 ring-[#f2f3f5] -mx-[19.5px] sm:-mx-[27.5px] ${language === 'fa' ? 'right-0' : 'left-0'}`}></div>
+                                                        <div className={`absolute top-2 w-2 h-2 rounded-full bg-[#0000fc] ring-4 ring-[#f2f3f5] -mx-[15.5px] lg:-mx-[27.5px] ${language === 'fa' ? 'right-0' : 'left-0'}`}></div>
                                                         <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 sm:gap-4 mb-2">
-                                                            <h4 className="text-gray-900 font-bold text-base">{item.role[language]}</h4>
-                                                            <span className="text-gray-400 text-xs font-medium shrink-0 bg-white px-2 py-1 rounded-md border border-gray-100">{item.duration}</span>
+                                                            <h4 className="text-gray-900 font-bold text-sm lg:text-base">{item.role[language]}</h4>
+                                                            <span className="text-gray-400 text-[10px] lg:text-xs font-medium shrink-0 bg-white px-2 py-1 rounded-md border border-gray-100">{item.duration}</span>
                                                         </div>
-                                                        <h5 className="text-[#0000fc] text-sm font-bold mb-3">{item.company[language]}</h5>
-                                                        <p className="text-gray-500 text-sm leading-relaxed">{item.desc[language]}</p>
+                                                        <h5 className="text-[#0000fc] text-xs lg:text-sm font-bold mb-2 lg:mb-3">{item.company[language]}</h5>
+                                                        <p className="text-gray-500 text-[12px] lg:text-sm leading-relaxed">{item.desc[language]}</p>
                                                     </div>
                                                 ))}
                                             </div>
@@ -344,29 +309,29 @@
                                     )}
 
                                     {activeTab === 'portfolio' && (
-                                        <div key={'portfolio-' + activeFilter} className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                                        <div key={'portfolio-' + activeFilter} className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-6">
                                             {filteredPortfolio.map((item, idx) => (
                                                 <div 
                                                     key={item.id} 
                                                     onClick={() => setSelectedProject(item)}
-                                                    className="group relative rounded-2xl overflow-hidden bg-white shadow-sm border border-gray-100 hover:shadow-md transition-all cursor-pointer animate-[zoomIn_0.5s_ease-out_forwards]"
+                                                    className="group relative rounded-xl lg:rounded-2xl overflow-hidden bg-white shadow-sm border border-gray-100 hover:shadow-md transition-all cursor-pointer animate-[zoomIn_0.5s_ease-out_forwards]"
                                                     style={{ animationDelay: `${idx * 100}ms`, opacity: 0 }}
                                                 >
                                                     <div className="aspect-[4/3] w-full overflow-hidden relative">
                                                         <img src={item.type === 'video' ? item.thumbnail : item.image} alt={item.title[language]} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" />
                                                         {item.type === 'video' && (
                                                             <div className="absolute inset-0 bg-black/10 flex items-center justify-center group-hover:bg-black/30 transition-colors duration-500">
-                                                                <div className="w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform duration-300">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="none" className="text-[#0000fc] ml-1"><path d="M5 3l14 9-14 9V3z"/></svg>
+                                                                <div className="w-10 h-10 lg:w-12 lg:h-12 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform duration-300">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none" className="text-[#0000fc] ml-1 lg:w-5 lg:h-5"><path d="M5 3l14 9-14 9V3z"/></svg>
                                                                 </div>
                                                             </div>
                                                         )}
                                                     </div>
-                                                    <div className="p-4 sm:p-5">
-                                                        <span className="text-[10px] sm:text-xs font-bold text-[#0000fc] bg-blue-50 px-2 py-1 rounded-md mb-2 inline-block">
+                                                    <div className="p-3 lg:p-5">
+                                                        <span className="text-[9px] lg:text-[10px] font-bold text-[#0000fc] bg-blue-50 px-2 py-1 rounded-md mb-2 inline-block">
                                                             {currentFilters[item.category]}
                                                         </span>
-                                                        <h4 className="text-gray-900 font-bold text-sm sm:text-base group-hover:text-[#0000fc] transition-colors">{item.title[language]}</h4>
+                                                        <h4 className="text-gray-900 font-bold text-xs lg:text-sm group-hover:text-[#0000fc] transition-colors">{item.title[language]}</h4>
                                                     </div>
                                                 </div>
                                             ))}
@@ -375,7 +340,7 @@
 
                                     {activeTab === 'education' && (
                                         <div className="animate-[slideUp_0.7s_ease-out]">
-                                            <div className="prose prose-gray max-w-none text-gray-600">
+                                            <div className="prose prose-gray max-w-none text-gray-600 text-[13px] lg:text-base">
                                                 <p>{language === 'fa' ? 'بخش آموزش‌ها در حال تکمیل است...' : 'Education section is being updated...'}</p>
                                             </div>
                                         </div>
@@ -383,7 +348,7 @@
 
                                     {activeTab === 'skills' && (
                                         <div className="animate-[slideUp_0.7s_ease-out]">
-                                            <div className="prose prose-gray max-w-none text-gray-600">
+                                            <div className="prose prose-gray max-w-none text-gray-600 text-[13px] lg:text-base">
                                                 <p>{language === 'fa' ? 'بخش مهارت‌ها در حال تکمیل است...' : 'Skills section is being updated...'}</p>
                                             </div>
                                         </div>
@@ -393,53 +358,32 @@
                         </main>
                     </div>
                     
-                    {/* Modal (پنجره پاپ‌آپ برای نمایش جزئیات نمونه‌کار) */}
+                    {/* Modal (پنجره پاپ‌آپ) */}
                     {selectedProject && (
                         <div className={`fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-12 ${isClosing ? 'animate-[fadeOut_0.3s_ease-in_forwards]' : 'animate-[fadeIn_0.3s_ease-out]'}`}>
-                            {/* بک‌گراند تاریک */}
-                            <div 
-                                className="absolute inset-0 bg-black/60 backdrop-blur-sm cursor-pointer" 
-                                onClick={handleCloseModal}
-                            ></div>
+                            <div className="absolute inset-0 bg-black/60 backdrop-blur-sm cursor-pointer" onClick={handleCloseModal}></div>
                             
-                            {/* باکس اصلی مودال */}
-                            <div className={`relative bg-white rounded-2xl w-full max-w-4xl max-h-full flex flex-col shadow-2xl overflow-hidden z-10 ${isClosing ? 'animate-[slideDown_0.3s_ease-in_forwards]' : 'animate-[slideUp_0.4s_ease-out]'}`}>
-                                
-                                {/* دکمه بستن */}
-                                <button 
-                                    onClick={handleCloseModal}
-                                    className={`absolute top-4 z-20 w-10 h-10 bg-black/50 hover:bg-black text-white rounded-full flex items-center justify-center transition-colors backdrop-blur-md ${language === 'fa' ? 'left-4' : 'right-4'}`}
-                                >
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                            <div className={`relative bg-white rounded-xl lg:rounded-2xl w-full max-w-4xl max-h-full flex flex-col shadow-2xl overflow-hidden z-10 ${isClosing ? 'animate-[slideDown_0.3s_ease-in_forwards]' : 'animate-[slideUp_0.4s_ease-out]'}`}>
+                                <button onClick={handleCloseModal} className={`absolute top-3 lg:top-4 z-20 w-8 h-8 lg:w-10 lg:h-10 bg-black/50 hover:bg-black text-white rounded-full flex items-center justify-center transition-colors backdrop-blur-md ${language === 'fa' ? 'left-3 lg:left-4' : 'right-3 lg:right-4'}`}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="lg:w-5 lg:h-5"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
                                 </button>
 
-                                {/* بخش مدیا (ویدیو یا عکس) */}
                                 <div className="w-full bg-gray-900 shrink-0 relative aspect-video flex items-center justify-center overflow-hidden">
                                     {selectedProject.type === 'video' ? (
-                                        <video 
-                                            src={selectedProject.videoUrl} 
-                                            controls 
-                                            autoPlay 
-                                            className="w-full h-full object-contain"
-                                        />
+                                        <video src={selectedProject.videoUrl} controls autoPlay className="w-full h-full object-contain" />
                                     ) : (
-                                        <img 
-                                            src={selectedProject.image} 
-                                            alt={selectedProject.title[language]} 
-                                            className="w-full h-full object-contain"
-                                        />
+                                        <img src={selectedProject.image} alt={selectedProject.title[language]} className="w-full h-full object-contain" />
                                     )}
                                 </div>
 
-                                {/* بخش توضیحات */}
-                                <div className="p-6 sm:p-8 overflow-y-auto">
-                                    <span className="text-[10px] sm:text-xs font-bold text-[#0000fc] bg-blue-50 px-2 py-1 rounded-md mb-3 inline-block">
+                                <div className="p-4 lg:p-8 overflow-y-auto">
+                                    <span className="text-[10px] lg:text-xs font-bold text-[#0000fc] bg-blue-50 px-2 py-1 rounded-md mb-2 lg:mb-3 inline-block">
                                         {currentFilters[selectedProject.category]}
                                     </span>
-                                    <h2 className="text-2xl sm:text-3xl font-black text-gray-900 mb-4">
+                                    <h2 className="text-lg lg:text-3xl font-black text-gray-900 mb-2 lg:mb-4">
                                         {selectedProject.title[language]}
                                     </h2>
-                                    <p className="text-gray-600 leading-relaxed text-sm sm:text-base">
+                                    <p className="text-gray-600 leading-relaxed text-xs lg:text-base">
                                         {selectedProject.desc[language]}
                                     </p>
                                 </div>
@@ -447,29 +391,13 @@
                         </div>
                     )}
 
-                    {/* Add custom animations that were previously handled by tailwind-animate plugin */}
                     <style>
                         {`
-                        @keyframes slideUp {
-                            from { opacity: 0; transform: translateY(16px); }
-                            to { opacity: 1; transform: translateY(0); }
-                        }
-                        @keyframes slideDown {
-                            from { opacity: 1; transform: translateY(0); }
-                            to { opacity: 0; transform: translateY(16px); }
-                        }
-                        @keyframes fadeIn {
-                            from { opacity: 0; transform: scale(0.95); }
-                            to { opacity: 1; transform: scale(1); }
-                        }
-                        @keyframes fadeOut {
-                            from { opacity: 1; transform: scale(1); }
-                            to { opacity: 0; transform: scale(0.95); }
-                        }
-                        @keyframes zoomIn {
-                            from { opacity: 0; transform: scale(0.95); }
-                            to { opacity: 1; transform: scale(1); }
-                        }
+                        @keyframes slideUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+                        @keyframes slideDown { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(16px); } }
+                        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+                        @keyframes fadeOut { from { opacity: 1; transform: scale(1); } to { opacity: 0; transform: scale(0.95); } }
+                        @keyframes zoomIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
                         `}
                     </style>
                 </div>
@@ -481,3 +409,10 @@
     </script>
 </body>
 </html>
+```
+
+حالا اگر پیش‌نمایش را روی سایز موبایل قرار دهید:
+* می‌بینید که هدر در بالا به صورت افقی قرار گرفته است و با اسکرول کردن به پایین، از صفحه محو می‌شود تا کاربر کل فضای گوشی را برای دیدن نمونه‌کارها در اختیار داشته باشد (البته باکس آبی تایتل همچنان به زیبایی در بالا میچسبد). 
+* تب‌ها را با دست (ماوس) به چپ و راست بکشید!
+
+این ساختار اپلیکیشن‌طور (App-like) برای موبایل چطور است؟
