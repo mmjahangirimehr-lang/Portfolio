@@ -1,29 +1,36 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="fa" dir="rtl" class="overflow-y-scroll bg-[#121212]">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>محمدمهدی جهانگیری مهر | طراح گرافیک و موشن گرافیک</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>پورتفولیو | محمدمهدی جهانگیری مهر</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
+    <!-- React & ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
-    <!-- Font definition for Modam and fallback Vazirmatn -->
     <style>
+        /* معرفی فونت مدام */
         @font-face {
             font-family: 'Modam';
             src: url('./Modam.woff2') format('woff2');
-            font-weight: 400;
+            font-weight: normal;
             font-style: normal;
             font-display: swap;
         }
         @font-face {
             font-family: 'Modam';
             src: url('./Modam-Bold.woff2') format('woff2');
-            font-weight: 700;
+            font-weight: bold;
             font-style: normal;
             font-display: swap;
         }
@@ -35,42 +42,27 @@
             font-display: swap;
         }
 
-        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;900&family=Inter:wght@400;600;700&display=swap');
-
-        /* اعمال فونت مدام روی تمام المان‌ها */
-        * {
-            font-family: 'Modam', 'Vazirmatn', sans-serif;
-        }
-        
-        .en-font, .en-font * {
-            font-family: 'Inter', sans-serif !important;
-        }
-
-        button {
-            font-family: inherit !important;
-        }
+        /* فونت‌های بک‌آپ آنلاین */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        @import url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.0.0/Vazirmatn-font-face.css');
 
         html, body {
-            background-color: #121212;
-            margin: 0;
-            padding: 0;
-            -webkit-tap-highlight-color: transparent;
-            overflow-y: scroll !important; /* همیشه نوار اسکرول عمودی را نشان بده */
-            scrollbar-gutter: stable; /* جلوگیری از پرش صفحه هنگام تغییر تب */
+            overflow-y: scroll !important;
+            background-color: #121212; /* رنگ پس‌زمینه دارک */
         }
         
-        /* Custom scrollbar */
+        /* اسکرول‌بار تاریک */
         ::-webkit-scrollbar {
-            width: 6px;
+            width: 8px;
         }
         ::-webkit-scrollbar-track {
             background: #121212;
         }
         ::-webkit-scrollbar-thumb {
-            background-color: #2e2e2e;
-            border-radius: 10px;
+            background-color: #333;
+            border-radius: 20px;
+            border: 2px solid #121212;
         }
-
         .scrollbar-hide::-webkit-scrollbar {
             display: none;
         }
@@ -78,32 +70,41 @@
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
+
+        /* اعمال قطعی فونت به دکمه‌ها مخصوصاً در موبایل */
+        button {
+            font-family: inherit !important;
+        }
     </style>
 </head>
-<body class="text-gray-100 min-h-screen selection:bg-[#FF6B00] selection:text-black">
-
+<body>
     <div id="root"></div>
-
-    <!-- React & ReactDOM -->
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <!-- Babel for JSX compilation -->
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
     <script type="text/babel">
         const { useState, useEffect, useRef } = React;
-        const { Mail, Phone, MapPin, Calendar, Download, ChevronRight, CheckCircle, ExternalLink, ChevronLeft, Globe, Play, Send, X } = lucide;
+        
+        const Mail = () => <i data-lucide="mail" className="w-4 h-4"></i>;
+        const Phone = () => <i data-lucide="phone" className="w-3.5 h-3.5"></i>;
+        const ChevronLeft = ({ className }) => <i data-lucide="chevron-left" className={className}></i>;
+        const Play = () => <i data-lucide="play" className="w-12 h-12 text-white ml-1"></i>;
+        const X = () => <i data-lucide="x" className="w-6 h-6 text-gray-400"></i>;
+        const Send = () => <i data-lucide="send" className="w-4 h-4"></i>;
 
         function Portfolio() {
             const [activeTab, setActiveTab] = useState('about');
             const [activeFilter, setActiveFilter] = useState('all');
-            const [showContact, setShowContact] = useState(false);
+            const [showPhone, setShowPhone] = useState(false);
             const [boxHeight, setBoxHeight] = useState('auto');
-            const [language, setLanguage] = useState('fa'); // 'fa' or 'en'
+            const [language, setLanguage] = useState('fa');
+            
             const [selectedProject, setSelectedProject] = useState(null);
+            const [isClosing, setIsClosing] = useState(false);
             
             const contentRef = useRef(null);
-            const navScrollRef = useRef(null);
+
+            useEffect(() => {
+                lucide.createIcons();
+            });
 
             const content = {
                 fa: {
@@ -114,8 +115,7 @@
                     ui: {
                         contact: "ارتباط با من",
                         phoneText: "۰۹۱۲ ۷۳ ۷۳ ۱۵۸",
-                        telegramText: "@Mahdi_Jahangirimehr",
-                        telegramUrl: "https://t.me/Mahdi_Jahangirimehr",
+                        telegram: "@Mahdi_Jahangirimehr"
                     },
                     tabs: {
                         about: "درباره من",
@@ -139,20 +139,19 @@
                     ui: {
                         contact: "Contact Me",
                         phoneText: "+98 912 73 73 158",
-                        telegramText: "@Mahdi_Jahangirimehr",
-                        telegramUrl: "https://t.me/Mahdi_Jahangirimehr",
+                        telegram: "@Mahdi_Jahangirimehr"
                     },
                     tabs: {
                         about: "About Me",
                         experience: "Experience",
                         portfolio: "Portfolio",
-                        education: "Education & Courses",
+                        education: "Education",
                         skills: "Skills"
                     },
                     filters: {
                         all: "All",
                         graphic: "Graphic Design",
-                        motion: "Motion Design",
+                        motion: "Motion Graphics",
                         logo: "Logo Design"
                     }
                 }
@@ -165,26 +164,16 @@
 
             const titleWidths = {
                 fa: {
-                    about: '110px',
-                    experience: '120px',
-                    portfolio: '110px',
-                    'portfolio-all': '110px',
-                    'portfolio-graphic': '200px',
-                    'portfolio-motion': '190px',
-                    'portfolio-logo': '190px',
-                    education: '160px',
-                    skills: '100px'
+                    about: '110px', experience: '120px', portfolio: '110px',
+                    'portfolio-all': '110px', 'portfolio-graphic': '220px',
+                    'portfolio-motion': '220px', 'portfolio-logo': '200px',
+                    education: '160px', skills: '100px'
                 },
                 en: {
-                    about: '115px',
-                    experience: '115px',
-                    portfolio: '100px',
-                    'portfolio-all': '100px',
-                    'portfolio-graphic': '170px',
-                    'portfolio-motion': '160px',
-                    'portfolio-logo': '150px',
-                    education: '160px',
-                    skills: '80px'
+                    about: '115px', experience: '115px', portfolio: '100px',
+                    'portfolio-all': '100px', 'portfolio-graphic': '230px',
+                    'portfolio-motion': '240px', 'portfolio-logo': '210px',
+                    education: '110px', skills: '80px'
                 }
             };
 
@@ -197,71 +186,58 @@
                 }
             }
 
-            // تابع اسکرول خودکار منوی موبایل
-            const scrollToTabButton = (e) => {
-                const container = navScrollRef.current;
-                if (!container) return;
-                const button = e.currentTarget;
-                const containerRect = container.getBoundingClientRect();
-                const btnRect = button.getBoundingClientRect();
-                const scrollLeft = container.scrollLeft + (btnRect.left - containerRect.left) - (containerRect.width / 2) + (btnRect.width / 2);
-                container.scrollTo({ left: scrollLeft, behavior: 'smooth' });
-            };
-
             useEffect(() => {
                 const el = contentRef.current;
                 if (!el) return;
-
                 const observer = new ResizeObserver(() => {
                     setBoxHeight(`${el.offsetHeight}px`);
                 });
-
                 observer.observe(el);
                 setBoxHeight(`${el.offsetHeight}px`);
-
                 return () => observer.disconnect();
             }, [activeTab, activeFilter, language]);
+
+            const closeModal = () => {
+                setIsClosing(true);
+                setTimeout(() => {
+                    setSelectedProject(null);
+                    setIsClosing(false);
+                }, 300);
+            };
 
             const portfolioItems = [
                 { 
                     id: 1, 
                     category: 'motion', 
-                    type: 'video', 
+                    type: 'video',
+                    title: { fa: "تیزر تبلیغاتی محصول", en: "Product Promo Video" }, 
                     thumbnail: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=600",
-                    videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4",
-                    title: { fa: "تیزر تبلیغاتی محصول", en: "Product Promo Teaser" },
-                    desc: { fa: "طراحی و موشن‌گرافیک تیزر معرفی محصول برای برند تجاری.", en: "Product introduction teaser design and motion graphics for commercial brand." }
+                    mediaUrl: "https://www.w3schools.com/html/mov_bbb.mp4", 
+                    desc: { fa: "ساخت تیزر تبلیغاتی با استفاده از افتر افکت و سینما فوردی.", en: "Creating promotional teaser using After Effects and Cinema 4D." }
                 },
                 { 
                     id: 2, 
                     category: 'graphic', 
-                    type: 'image', 
+                    type: 'image',
+                    title: { fa: "طراحی پوستر همایش", en: "Conference Poster Design" }, 
                     thumbnail: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=600",
-                    title: { fa: "پوستر همایش سراسری", en: "National Event Poster" },
-                    desc: { fa: "طراحی کادربندی، هویت بصری و پوستر رسمی همایش سالانه.", en: "Layout design, visual identity and official poster for the annual conference." }
+                    mediaUrl: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200",
+                    desc: { fa: "طراحی پوستر برای همایش بین المللی با ترکیب بندی مدرن.", en: "Poster design for international conference with modern composition." }
                 },
                 { 
                     id: 3, 
                     category: 'logo', 
-                    type: 'image', 
-                    thumbnail: "https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&q=80&w=600",
-                    title: { fa: "برندینگ و لوگوی استارتاپ", en: "Startup Branding & Logo" },
-                    desc: { fa: "طراحی نشان تجاری مینیمال و راهنمای هویت بصری.", en: "Minimalist brand mark design and visual identity guidelines." }
-                },
-                { 
-                    id: 4, 
-                    category: 'motion', 
-                    type: 'video', 
+                    type: 'image',
+                    title: { fa: "لوگوی استارتاپ تکنولوژی", en: "Tech Startup Logo" }, 
                     thumbnail: "https://images.unsplash.com/photo-1526498460520-4c246339dccb?auto=format&fit=crop&q=80&w=600",
-                    videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4",
-                    title: { fa: "موشن گرافیک اینمیشن کوتاه", en: "Short Animation Motion" },
-                    desc: { fa: "استوری‌برد و انیمیت دوبعدی برای کمپین شبکه‌های اجتماعی.", en: "Storyboard and 2D animation for social media campaign." }
-                },
+                    mediaUrl: "https://images.unsplash.com/photo-1526498460520-4c246339dccb?auto=format&fit=crop&q=80&w=1200",
+                    desc: { fa: "طراحی هویت بصری و لوگو مینیمال برای استارتاپ حوزه هوش مصنوعی.", en: "Minimal visual identity and logo design for AI startup." }
+                }
             ];
 
             const experienceItems = [
-                { id: 1, role: { fa: "موشن‌دیزاینر ارشد", en: "Senior Motion Designer" }, company: { fa: "آژانس تبلیغاتی رسا", en: "Rasa Advertising Agency" }, duration: { fa: "۱۴۰۱ - تاکنون", en: "2022 - Present" }, desc: { fa: "سرپرست تیم موشن گرافیک و طراحی تیزرهای تلویزیونی و دیجیتال.", en: "Head of motion graphics team and designer of TV and digital teasers." } },
-                { id: 2, role: { fa: "طراح گرافیک", en: "Graphic Designer" }, company: { fa: "استودیو هنری بوم", en: "Boom Art Studio" }, duration: { fa: "۱۳۹۹ - ۱۴۰۱", en: "2020 - 2022" }, desc: { fa: "طراحی کمپین‌های تبلیغاتی، هویت بصری برندها و پوسترهای تخصصی.", en: "Designing advertising campaigns, brand visual identities, and specialized posters." } },
+                { id: 1, role: { fa: "طراح ارشد گرافیک", en: "Senior Graphic Designer" }, company: { fa: "آژانس تبلیغاتی", en: "Ad Agency" }, duration: { fa: "۱۴۰۱ - تاکنون", en: "2022 - Present" }, desc: { fa: "طراحی کمپین‌های تبلیغاتی ۳۶۰ درجه برای برندهای معتبر.", en: "Designing 360-degree ad campaigns for top brands." } },
+                { id: 2, role: { fa: "موشن دیزاینر", en: "Motion Designer" }, company: { fa: "استودیو خلاق", en: "Creative Studio" }, duration: { fa: "۱۳۹۹ - ۱۴۰۱", en: "2020 - 2022" }, desc: { fa: "تولید بیش از ۵۰ دقیقه انیمیشن دو بعدی و تیزر تبلیغاتی.", en: "Producing over 50 minutes of 2D animation and promos." } },
             ];
 
             const filteredPortfolio = activeFilter === 'all' 
@@ -269,133 +245,108 @@
                 : portfolioItems.filter(item => item.category === activeFilter);
 
             return (
-                <div className={`min-h-screen bg-[#121212] flex justify-center selection:bg-[#FF6B00] selection:text-black transition-colors duration-500 ${language === 'en' ? 'en-font' : ''}`} dir={language === 'fa' ? 'rtl' : 'ltr'}>
-                    <div className="w-full max-w-6xl p-4 sm:p-6 md:p-8 flex flex-col lg:flex-row gap-6 md:gap-8 lg:gap-10 relative items-start">
+                <div 
+                    className="min-h-screen bg-[#121212] flex justify-center selection:bg-[#FF6B00] selection:text-white transition-colors duration-500"
+                    dir={language === 'fa' ? 'rtl' : 'ltr'}
+                    style={{ 
+                        fontFamily: language === 'fa' 
+                            ? '"Modam", "Vazirmatn", "Inter", sans-serif' 
+                            : '"Inter", "Modam", "Vazirmatn", sans-serif' 
+                    }}
+                >
+                    <div className="w-full max-w-6xl lg:p-8 flex flex-col lg:flex-row gap-0 lg:gap-10 relative items-start">
                         
-                        {/* سایدبار سمت راست (در دسکتاپ) / بالای صفحه (در موبایل) */}
-                        <aside className="w-full lg:w-[280px] shrink-0 bg-[#1e1e1e] rounded-3xl flex flex-col lg:sticky top-4 sm:top-6 lg:top-8 shadow-[0_8px_30px_rgb(0,0,0,0.3)] border border-gray-800/60 lg:h-[calc(100vh-4rem)] z-40 overflow-hidden">
+                        <aside className="w-full lg:w-[280px] shrink-0 bg-[#1e1e1e] lg:rounded-2xl flex flex-col lg:sticky lg:top-8 shadow-[0_8px_30px_rgba(0,0,0,0.2)] lg:h-[calc(100vh-4rem)] z-40">
                             
-                            <div className="p-4 sm:p-6 shrink-0 flex flex-col gap-6 relative z-20">
-                                <div className="flex justify-between items-center w-full">
-                                    <div className="flex gap-1 bg-[#121212] p-1 rounded-xl border border-gray-800">
-                                        <button 
-                                            onClick={() => setLanguage('fa')}
-                                            className={`px-3 py-1 text-xs font-bold rounded-lg transition-colors ${language === 'fa' ? 'bg-[#FF6B00] text-[#121212]' : 'text-gray-400 hover:bg-gray-800'}`}
-                                        >
-                                            فارسی
-                                        </button>
-                                        <button 
-                                            onClick={() => setLanguage('en')}
-                                            className={`px-3 py-1 text-xs font-bold rounded-lg transition-colors ${language === 'en' ? 'bg-[#FF6B00] text-[#121212]' : 'text-gray-400 hover:bg-gray-800'}`}
-                                        >
-                                            English
-                                        </button>
+                            {}
+                            <div className="p-4 lg:p-6 shrink-0 flex flex-row lg:flex-col justify-between lg:justify-start items-center lg:items-stretch gap-4 relative z-20">
+                                <div className="flex items-center gap-3 bg-[#282828] p-2 lg:p-3 rounded-2xl shadow-sm flex-1 lg:flex-none w-full lg:w-auto">
+                                    <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-xl bg-gradient-to-br from-[#FF6B00] to-orange-400 overflow-hidden shrink-0 shadow-sm"></div>
+                                    <div className="flex flex-col min-w-0">
+                                        <h1 className="text-white font-black text-[13px] truncate">{currentContent.profile.name}</h1>
+                                        <p className="text-gray-400 text-[10px] lg:text-[11px] truncate mt-0.5">{currentContent.profile.title}</p>
                                     </div>
+                                </div>
+                                
+                                <div className="flex gap-1 bg-[#282828] p-1 rounded-xl shadow-sm shrink-0">
+                                    <button onClick={() => setLanguage('fa')} className={`px-2.5 lg:px-3 py-1.5 lg:py-1 text-[11px] lg:text-xs font-bold rounded-lg transition-colors ${language === 'fa' ? 'bg-[#FF6B00] text-[#121212]' : 'text-gray-400 hover:bg-[#333]'}`}>فارسی</button>
+                                    <button onClick={() => setLanguage('en')} className={`px-2.5 lg:px-3 py-1.5 lg:py-1 text-[11px] lg:text-xs font-bold rounded-lg transition-colors ${language === 'en' ? 'bg-[#FF6B00] text-[#121212]' : 'text-gray-400 hover:bg-[#333]'}`}>English</button>
                                 </div>
                             </div>
 
-                            <div className="flex-1 overflow-y-auto px-4 sm:px-6 pb-6 scrollbar-hide relative z-10 flex flex-col gap-6">
-                                
-                                <div className="flex items-center gap-3 bg-[#121212] p-3 rounded-2xl border border-gray-800/80">
-                                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#FF6B00] to-amber-600 flex items-center justify-center text-[#121212] font-black text-lg shrink-0 shadow-md">
-                                        م.ج
-                                    </div>
-                                    <div className="flex flex-col min-w-0">
-                                        <h1 className="text-white font-black text-sm truncate">{currentContent.profile.name}</h1>
-                                        <p className="text-gray-400 text-[11px] truncate mt-0.5">{currentContent.profile.title}</p>
-                                    </div>
-                                </div>
-
-                                {/* منوی ناوبری با قابلیت اسکرول خودکار در موبایل */}
-                                <nav 
-                                    ref={navScrollRef}
-                                    className="flex lg:flex-col flex-row gap-2 lg:gap-0 overflow-x-auto lg:overflow-visible scrollbar-hide py-1"
-                                >
+                            {}
+                            <div className="flex-none lg:flex-1 overflow-x-auto lg:overflow-y-auto px-4 lg:px-6 pb-2 lg:pb-6 scrollbar-hide relative z-10 w-full">
+                                <nav className="flex flex-row lg:flex-col items-start lg:items-stretch gap-1 lg:gap-0 w-max lg:w-full">
                                     {Object.keys(currentTabs).map((key, index) => (
                                         <React.Fragment key={key}>
-                                            <button
-                                                onClick={(e) => {
-                                                    setActiveTab(key);
-                                                    if (key !== 'portfolio') setActiveFilter('all');
-                                                    scrollToTabButton(e);
-                                                }}
-                                                className={`
-                                                    relative group px-4 py-3 text-sm font-bold rounded-xl transition-all duration-300 shrink-0 lg:shrink
-                                                    ${activeTab === key ? 'text-[#FF6B00] bg-[#121212] shadow-sm border border-gray-800' : 'text-gray-400 hover:text-white hover:bg-[#121212]/50'}
-                                                    ${language === 'en' ? 'text-left' : 'text-right'}
-                                                `}
-                                            >
-                                                <span className="relative z-10 whitespace-nowrap">{currentTabs[key]}</span>
-                                            </button>
+                                            <div className="flex flex-col items-stretch relative shrink-0">
+                                                <button
+                                                    onClick={(e) => {
+                                                        if (activeTab === key && key === 'portfolio') {
+                                                            setActiveTab('about');
+                                                        } else {
+                                                            setActiveTab(key);
+                                                            if (key !== 'portfolio') setActiveFilter('all');
+                                                        }
+                                                        
+                                                        if (window.innerWidth < 1024) {
+                                                            e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                                                        }
+                                                    }}
+                                                    className={`relative group px-3 py-2 lg:px-4 lg:py-3 text-[11px] lg:text-sm font-bold rounded-xl transition-all duration-300 whitespace-nowrap shrink-0 w-full ${activeTab === key ? 'text-[#FF6B00] bg-[#282828] shadow-sm' : 'text-gray-400 hover:text-white hover:bg-white/5'} ${language === 'en' ? 'lg:text-left text-center' : 'lg:text-right text-center'}`}
+                                                >
+                                                    <span className="relative z-10">{currentTabs[key]}</span>
+                                                </button>
 
-                                            {key === 'portfolio' && (
-                                                <div className={`
-                                                    overflow-hidden transition-all duration-500 ease-in-out px-2
-                                                    ${activeTab === 'portfolio' ? 'max-h-60 opacity-100 my-2' : 'max-h-0 opacity-0 my-0'}
-                                                `}>
-                                                    <div className={`flex flex-col gap-1 ${language === 'fa' ? 'border-r-2 border-gray-800 mr-2 pr-2' : 'border-l-2 border-gray-800 ml-2 pl-2'}`}>
-                                                        {Object.keys(currentFilters).map((filterKey) => (
-                                                            <button
-                                                                key={filterKey}
-                                                                onClick={(e) => {
-                                                                    e.stopPropagation();
-                                                                    setActiveFilter(filterKey);
-                                                                }}
-                                                                className={`
-                                                                    text-xs font-bold py-2 px-3 rounded-lg transition-all
-                                                                    ${language === 'en' ? 'text-left' : 'text-right'}
-                                                                    ${activeFilter === filterKey 
-                                                                        ? 'text-[#FF6B00] bg-[#121212]' 
-                                                                        : 'text-gray-500 hover:text-gray-300 hover:bg-[#121212]/50'}
-                                                                `}
-                                                            >
-                                                                {currentFilters[filterKey]}
-                                                            </button>
-                                                        ))}
+                                                {/* زیرمنوی نمونه‌کارها */}
+                                                {key === 'portfolio' && (
+                                                    <div className={`overflow-hidden transition-all duration-500 ease-in-out flex flex-col items-stretch w-full lg:px-2 ${activeTab === 'portfolio' ? 'max-h-[250px] opacity-100 mt-1 lg:my-2' : 'max-h-0 opacity-0 mt-0 m-0'}`}>
+                                                        <div className={`flex flex-col gap-1 items-stretch ${language === 'fa' ? 'border-r-2 border-gray-700/60 pr-2 mr-2' : 'border-l-2 border-gray-700/60 pl-2 ml-2'}`}>
+                                                            {Object.keys(currentFilters).map((filterKey) => (
+                                                                <button
+                                                                    key={filterKey}
+                                                                    onClick={(e) => { e.stopPropagation(); setActiveFilter(filterKey); }}
+                                                                    className={`text-[10px] lg:text-xs font-bold py-1.5 lg:py-2 px-2 lg:px-3 rounded-lg transition-all whitespace-nowrap shrink-0 w-full text-center ${language === 'en' ? 'text-left' : 'text-right'} ${activeFilter === filterKey ? 'text-[#FF6B00] bg-[#FF6B00]/10' : 'text-gray-500 hover:text-white hover:bg-white/5'}`}
+                                                                >
+                                                                    {currentFilters[filterKey]}
+                                                                </button>
+                                                            ))}
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            )}
+                                                )}
+                                            </div>
+
                                             {index < Object.keys(currentTabs).length - 1 && (
-                                                <div className="hidden lg:block w-full h-px bg-gray-800/60 my-1"></div>
+                                                <div className="w-px h-4 lg:w-full lg:h-px bg-gray-700/50 mx-1 lg:mx-0 lg:my-1 shrink-0 mt-2.5 lg:mt-0"></div>
                                             )}
                                         </React.Fragment>
                                     ))}
                                 </nav>
                             </div>
 
-                            {/* بخش ارتباط با من در پایین سایدبار */}
-                            <div className="relative shrink-0 pt-4 pb-6 px-4 sm:px-6 z-20 mt-auto bg-[#1e1e1e]">
-                                <div className="absolute top-0 left-0 right-0 h-8 bg-gradient-to-t from-[#1e1e1e] to-transparent pointer-events-none -mt-8"></div>
+                            {}
+                            <div className="hidden lg:block relative shrink-0 pt-4 pb-6 px-6 z-20 mt-auto bg-[#1e1e1e]">
                                 <div className="flex flex-col relative w-full items-center">
                                     <button 
-                                        onClick={() => setShowContact(!showContact)}
-                                        className="group relative z-10 flex items-center justify-between w-full h-11 px-4 bg-[#2e2e2e] text-white text-[13px] font-bold rounded-xl hover:bg-[#383838] transition-all duration-300 shadow-sm border border-gray-700/50"
+                                        onClick={() => setShowPhone(!showPhone)}
+                                        className="group relative z-10 flex items-center justify-between w-full h-11 px-4 bg-[#282828] border border-gray-700 text-gray-300 text-[13px] font-bold rounded-xl hover:bg-[#333] transition-all duration-300 shadow-md"
                                     >
                                         <span>{currentUI.contact}</span>
-                                        <ChevronLeft className={`w-4 h-4 transition-transform duration-300 ${showContact ? '-rotate-90' : (language === 'fa' ? 'rotate-0' : 'rotate-180')}`} />
+                                        <ChevronLeft className={`w-4 h-4 transition-transform duration-300 ${showPhone ? '-rotate-90' : (language === 'fa' ? 'rotate-0' : 'rotate-180')}`} />
                                     </button>
                                     
-                                    <div 
-                                        className={`w-full overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-                                            showContact ? 'max-h-32 opacity-100 mt-2' : 'max-h-0 opacity-0 mt-0'
-                                        }`}
-                                    >
-                                        <div className="bg-[#121212] p-3 rounded-xl flex flex-col gap-2 border border-gray-800 shadow-inner w-full">
-                                            <div className="flex items-center gap-3">
-                                                <div className="w-6 h-6 rounded-md bg-[#1e1e1e] flex items-center justify-center text-[#FF6B00] shrink-0 border border-gray-800">
-                                                    <Phone className="w-3.5 h-3.5" />
-                                                </div>
-                                                <a href="tel:+989127373158" className="text-gray-200 font-bold tracking-widest text-[12px] hover:text-[#FF6B00] transition-colors" dir="ltr">
+                                    <div className={`w-full overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${showPhone ? 'max-h-[120px] opacity-100 mt-2' : 'max-h-0 opacity-0 mt-0'}`}>
+                                        <div className="flex flex-col gap-2 w-full">
+                                            <div className="bg-[#282828] h-11 px-4 rounded-xl flex items-center gap-3 border border-gray-700 shadow-sm w-full">
+                                                <div className="w-6 h-6 rounded-md bg-[#1e1e1e] flex items-center justify-center text-[#FF6B00] shrink-0"><Phone /></div>
+                                                <a href="tel:+989127373158" className="text-white font-bold tracking-widest text-[13px] hover:text-[#FF6B00] transition-colors mt-0.5" dir="ltr">
                                                     {currentUI.phoneText}
                                                 </a>
                                             </div>
-                                            <div className="w-full h-px bg-gray-800/80"></div>
-                                            <div className="flex items-center gap-3">
-                                                <div className="w-6 h-6 rounded-md bg-[#1e1e1e] flex items-center justify-center text-[#0088cc] shrink-0 border border-gray-800">
-                                                    <Send className="w-3.5 h-3.5" />
-                                                </div>
-                                                <a href={currentUI.telegramUrl} target="_blank" rel="noopener noreferrer" className="text-gray-200 font-bold tracking-wider text-[12px] hover:text-[#FF6B00] transition-colors" dir="ltr">
-                                                    {currentUI.telegramText}
+                                            <div className="bg-[#282828] h-11 px-4 rounded-xl flex items-center gap-3 border border-gray-700 shadow-sm w-full">
+                                                <div className="w-6 h-6 rounded-md bg-[#1e1e1e] flex items-center justify-center text-[#FF6B00] shrink-0"><Send /></div>
+                                                <a href="https://t.me/Mahdi_Jahangirimehr" target="_blank" rel="noopener noreferrer" className="text-white font-bold tracking-widest text-[13px] hover:text-[#FF6B00] transition-colors mt-0.5" dir="ltr">
+                                                    {currentUI.telegram}
                                                 </a>
                                             </div>
                                         </div>
@@ -404,16 +355,16 @@
                             </div>
                         </aside>
 
-                        {/* بخش اصلی محتوا */}
-                        <main className="flex-1 w-full relative min-w-0 pb-12">
+                        {}
+                        <main className="flex-1 w-full relative min-w-0 px-4 pb-12 lg:px-0 mt-4 lg:mt-0">
                             
                             <div className="sticky top-0 z-30 pt-0 bg-[#121212]">
-                                <div className="pt-4 bg-[#121212]">
+                                <div className="pt-2 lg:pt-4 bg-[#121212]">
                                     <div 
                                         className={`h-11 bg-[#FF6B00] rounded-xl flex items-center px-4 overflow-hidden transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${language === 'fa' ? 'origin-right' : 'origin-left'}`}
                                         style={{ width: titleWidths[language][currentTitleKey] || '200px' }}
                                     >
-                                        <h2 key={currentTitleKey} className="text-[#121212] font-black text-xs sm:text-sm whitespace-nowrap animate-in fade-in zoom-in-95 duration-500">
+                                        <h2 key={currentTitleKey} className="text-[#121212] font-black text-xs sm:text-sm whitespace-nowrap" style={{ animation: 'fadeIn 0.5s ease-out, zoomIn 0.5s ease-out' }}>
                                             {displayTitle}
                                         </h2>
                                     </div>
@@ -421,39 +372,27 @@
                                 <div className="h-6 bg-gradient-to-b from-[#121212] to-transparent pointer-events-none"></div>
                             </div>
 
-                            <div 
-                                className="bg-[#1e1e1e] rounded-2xl w-full overflow-hidden transition-[height] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] relative border border-gray-800/60 shadow-xl"
-                                style={{ height: boxHeight }}
-                            >
+                            <div className="bg-[#1e1e1e] rounded-2xl w-full overflow-hidden transition-[height] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] relative" style={{ height: boxHeight }}>
                                 <div ref={contentRef} className="p-6 sm:p-8 absolute top-0 left-0 right-0 w-full">
                                     
                                     {activeTab === 'about' && (
-                                        <div className="animate-in fade-in slide-in-from-bottom-4 duration-700">
+                                        <div style={{ animation: 'slideUp 0.7s ease-out, fadeIn 0.7s ease-out' }}>
                                             <h3 className="text-xl font-black text-white mb-4">{currentTabs.about}</h3>
-                                            <div className="prose prose-invert max-w-none text-gray-300 leading-relaxed text-sm sm:text-base">
-                                                <p>
-                                                    {language === 'fa' 
-                                                        ? 'سلام! من محمدمهدی جهانگیری مهر هستم، طراح گرافیک و موشن‌دیزاینر. با سال‌ها تجربه در زمینه خلق هویت بصری، طراحی پوستر و موشن‌گرافیک، تلاش می‌کنم ایده‌ها را به آثار بصری زنده و تاثیرگذار تبدیل کنم.'
-                                                        : 'Hello! I am mm.jahangirimehr, a graphic and motion designer. With years of experience in visual identity creation, poster design, and motion graphics, I strive to turn ideas into vivid and impactful visual artworks.'}
-                                                </p>
-                                                <p className="mt-4">
-                                                    {language === 'fa' 
-                                                        ? 'تخصص من در ترکیب اصول کلاسیک طراحی با پویاییِ موشن گرافیک است تا برندها و پروژه‌ها بالاترین میزان جذابیت و ارتباط را با مخاطب خود برقرار کنند.'
-                                                        : 'My specialty is combining classic design principles with the dynamism of motion graphics so brands and projects can establish the highest level of engagement with their audience.'}
-                                                </p>
+                                            <div className="prose prose-invert max-w-none text-gray-400 leading-relaxed text-sm sm:text-base">
+                                                <p>متن آزمایشی درباره من...</p>
                                             </div>
                                         </div>
                                     )}
 
                                     {activeTab === 'experience' && (
-                                        <div className="animate-in fade-in slide-in-from-bottom-4 duration-700">
-                                            <div className="flex flex-col gap-8 relative before:content-[''] before:absolute before:top-2 before:bottom-2 before:w-px before:bg-gray-800 before:-mx-4 sm:before:-mx-6">
+                                        <div style={{ animation: 'slideUp 0.7s ease-out, fadeIn 0.7s ease-out' }}>
+                                            <div className="flex flex-col gap-8 relative before:content-[''] before:absolute before:top-2 before:bottom-2 before:w-px before:bg-gray-700 before:-mx-4 sm:before:-mx-6">
                                                 {experienceItems.map((item) => (
                                                     <div key={item.id} className="relative z-10">
                                                         <div className={`absolute top-2 w-2 h-2 rounded-full bg-[#FF6B00] ring-4 ring-[#1e1e1e] -mx-[19.5px] sm:-mx-[27.5px] ${language === 'fa' ? 'right-0' : 'left-0'}`}></div>
                                                         <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 sm:gap-4 mb-2">
                                                             <h4 className="text-white font-bold text-base">{item.role[language]}</h4>
-                                                            <span className="text-gray-400 text-xs font-medium shrink-0 bg-[#121212] px-2.5 py-1 rounded-md border border-gray-800">{item.duration[language]}</span>
+                                                            <span className="text-gray-300 text-xs font-medium shrink-0 bg-[#282828] px-2 py-1 rounded-md border border-gray-700">{item.duration[language]}</span>
                                                         </div>
                                                         <h5 className="text-[#FF6B00] text-sm font-bold mb-3">{item.company[language]}</h5>
                                                         <p className="text-gray-400 text-sm leading-relaxed">{item.desc[language]}</p>
@@ -463,32 +402,31 @@
                                         </div>
                                     )}
 
+                                    {}
                                     {activeTab === 'portfolio' && (
-                                        <div key={`portfolio-${activeFilter}`} className="animate-in fade-in slide-in-from-bottom-4 duration-700 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+                                        <div key={`portfolio-${activeFilter}`} style={{ animation: 'zoomIn 0.5s cubic-bezier(0.16,1,0.3,1), fadeIn 0.5s ease-out' }} className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                                             {filteredPortfolio.map((item) => (
                                                 <div 
                                                     key={item.id} 
                                                     onClick={() => setSelectedProject(item)}
-                                                    className="group relative rounded-xl sm:rounded-2xl overflow-hidden bg-[#121212] shadow-sm border border-gray-800 hover:border-gray-600 transition-all cursor-pointer flex flex-col"
+                                                    className="group relative rounded-2xl overflow-hidden bg-[#282828] shadow-sm border border-gray-800 hover:border-gray-600 transition-all cursor-pointer"
                                                 >
                                                     <div className="aspect-[4/3] w-full overflow-hidden relative bg-black">
                                                         <img src={item.thumbnail} alt={item.title[language]} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out opacity-90 group-hover:opacity-100" />
                                                         
                                                         {item.type === 'video' && (
                                                             <div className="absolute inset-0 flex items-center justify-center bg-black/40 group-hover:bg-black/20 transition-colors">
-                                                                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/30 group-hover:scale-110 transition-transform">
-                                                                    <Play className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white ml-0.5" />
+                                                                <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/30 group-hover:scale-110 transition-transform">
+                                                                    <Play />
                                                                 </div>
                                                             </div>
                                                         )}
                                                     </div>
-                                                    <div className="p-3 flex flex-col flex-1 justify-between">
-                                                        <div>
-                                                            <span className="text-[9px] sm:text-[10px] font-bold text-[#121212] bg-[#FF6B00] px-1.5 py-0.5 rounded-md mb-1 inline-block">
-                                                                {currentFilters[item.category]}
-                                                            </span>
-                                                            <h4 className="text-white font-bold text-xs sm:text-sm group-hover:text-[#FF6B00] transition-colors leading-tight line-clamp-1">{item.title[language]}</h4>
-                                                        </div>
+                                                    <div className="p-4 sm:p-5">
+                                                        <span className="text-[10px] sm:text-xs font-bold text-[#FF6B00] bg-[#FF6B00]/10 px-2 py-1 rounded-md mb-2 inline-block">
+                                                            {currentFilters[item.category]}
+                                                        </span>
+                                                        <h4 className="text-white font-bold text-sm sm:text-base group-hover:text-[#FF6B00] transition-colors">{item.title[language]}</h4>
                                                     </div>
                                                 </div>
                                             ))}
@@ -496,61 +434,76 @@
                                     )}
 
                                     {activeTab === 'education' && (
-                                        <div className="animate-in fade-in slide-in-from-bottom-4 duration-700">
-                                            <div className="prose prose-invert max-w-none text-gray-300">
-                                                <h4 className="text-white font-bold text-base mb-2">{language === 'fa' ? 'دوره‌های تخصصی و کارگاه‌ها' : 'Specialized Courses & Workshops'}</h4>
-                                                <p>{language === 'fa' ? 'مدرک تخصصی موشن گرافیک و تدوین پیشرفته از موسسات معتبر آموزشی.' : 'Advanced motion graphics and editing professional certificate from reputable educational institutions.'}</p>
-                                            </div>
+                                        <div style={{ animation: 'slideUp 0.7s ease-out, fadeIn 0.7s ease-out' }}>
+                                            <p className="text-gray-400">{language === 'fa' ? 'بخش آموزش‌ها...' : 'Education section...'}</p>
                                         </div>
                                     )}
 
                                     {activeTab === 'skills' && (
-                                        <div className="animate-in fade-in slide-in-from-bottom-4 duration-700">
-                                            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                                                {['After Effects', 'Premiere Pro', 'Photoshop', 'Illustrator', 'Cinema 4D', 'UI/UX Design'].map((skill, idx) => (
-                                                    <div key={idx} className="bg-[#121212] border border-gray-800 p-3 rounded-xl flex items-center justify-between">
-                                                        <span className="text-white font-bold text-xs sm:text-sm">{skill}</span>
-                                                        <CheckCircle className="w-4 h-4 text-[#FF6B00]" />
-                                                    </div>
-                                                ))}
-                                            </div>
+                                        <div style={{ animation: 'slideUp 0.7s ease-out, fadeIn 0.7s ease-out' }}>
+                                            <p className="text-gray-400">{language === 'fa' ? 'بخش مهارت‌ها...' : 'Skills section...'}</p>
                                         </div>
                                     )}
-
                                 </div>
                             </div>
                         </main>
-                    </div>
-
-                    {/* مودال (پاپ‌آپ) نمایش جزییات پروژه */}
-                    {selectedProject && (
-                        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-300" onClick={() => setSelectedProject(null)}>
-                            <div className="bg-[#1e1e1e] border border-gray-800 w-full max-w-2xl rounded-3xl overflow-hidden shadow-2xl relative animate-in zoom-in-95 duration-300 flex flex-col max-h-[90vh]" onClick={(e) => e.stopPropagation()}>
-                                <button 
-                                    onClick={() => setSelectedProject(null)}
-                                    className="absolute top-4 left-4 z-20 w-9 h-9 rounded-full bg-black/60 hover:bg-black text-white flex items-center justify-center transition-colors border border-gray-700"
+                        
+                        {}
+                        {selectedProject && (
+                            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-12">
+                                <div 
+                                    className="absolute inset-0 bg-black/80 backdrop-blur-sm" 
+                                    onClick={closeModal}
+                                    style={{ animation: isClosing ? 'fadeOut 0.3s forwards' : 'fadeIn 0.3s ease-out' }}
+                                ></div>
+                                
+                                <div 
+                                    className="bg-[#1e1e1e] w-full max-w-5xl max-h-[90vh] rounded-2xl sm:rounded-3xl shadow-2xl relative z-10 flex flex-col overflow-hidden border border-gray-800"
+                                    style={{ animation: isClosing ? 'slideDownOut 0.3s forwards, fadeOut 0.3s forwards' : 'slideUp 0.5s ease-out, zoomIn 0.5s ease-out' }}
                                 >
-                                    <X className="w-5 h-5" />
-                                </button>
-
-                                <div className="w-full aspect-video bg-black relative flex items-center justify-center overflow-hidden shrink-0">
-                                    {selectedProject.type === 'video' ? (
-                                        <video src={selectedProject.videoUrl} controls autoPlay className="w-full h-full object-contain" />
-                                    ) : (
-                                        <img src={selectedProject.thumbnail} alt={selectedProject.title[language]} className="w-full h-full object-cover" />
-                                    )}
-                                </div>
-
-                                <div className="p-6 overflow-y-auto">
-                                    <span className="text-[10px] font-bold text-[#121212] bg-[#FF6B00] px-2 py-0.5 rounded-md mb-2 inline-block">
-                                        {currentFilters[selectedProject.category]}
-                                    </span>
-                                    <h3 className="text-white font-black text-lg sm:text-xl mb-3">{selectedProject.title[language]}</h3>
-                                    <p className="text-gray-300 text-sm leading-relaxed">{selectedProject.desc[language]}</p>
+                                    <div className="flex items-center justify-between p-4 sm:p-5 border-b border-gray-800 shrink-0">
+                                        <div className="flex flex-col">
+                                            <h3 className="font-black text-white text-lg sm:text-xl">{selectedProject.title[language]}</h3>
+                                            <span className="text-[#FF6B00] text-xs font-bold mt-1">{currentFilters[selectedProject.category]}</span>
+                                        </div>
+                                        <button onClick={closeModal} className="w-10 h-10 rounded-xl bg-[#282828] flex items-center justify-center hover:bg-[#333] transition-colors shrink-0">
+                                            <X />
+                                        </button>
+                                    </div>
+                                    
+                                    <div className="flex-1 overflow-y-auto bg-[#121212] p-4 sm:p-6 flex flex-col items-center">
+                                        {selectedProject.type === 'video' ? (
+                                            <div className="w-full rounded-xl overflow-hidden shadow-sm bg-black aspect-video max-w-4xl border border-gray-800">
+                                                <video controls autoPlay className="w-full h-full object-contain">
+                                                    <source src={selectedProject.mediaUrl} type="video/mp4" />
+                                                    Your browser does not support the video tag.
+                                                </video>
+                                            </div>
+                                        ) : (
+                                            <div className="w-full rounded-xl overflow-hidden shadow-sm max-w-4xl border border-gray-800">
+                                                <img src={selectedProject.mediaUrl} alt={selectedProject.title[language]} className="w-full h-auto object-contain" />
+                                            </div>
+                                        )}
+                                        
+                                        <div className="w-full max-w-4xl mt-6 sm:mt-8 bg-[#1e1e1e] p-6 rounded-xl shadow-sm border border-gray-800">
+                                            <h4 className="font-bold text-white mb-2">{language === 'fa' ? 'درباره این پروژه' : 'About this project'}</h4>
+                                            <p className="text-gray-400 leading-relaxed text-sm sm:text-base">{selectedProject.desc[language]}</p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    )}
+                        )}
+                        
+                        <style>
+                            {`
+                            @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+                            @keyframes slideDownOut { from { transform: translateY(0); } to { transform: translateY(20px); } }
+                            @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+                            @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+                            @keyframes zoomIn { from { opacity: 0; transform: scale(0.97); } to { opacity: 1; transform: scale(1); } }
+                            `}
+                        </style>
+                    </div>
                 </div>
             );
         }
