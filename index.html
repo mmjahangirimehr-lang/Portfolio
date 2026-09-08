@@ -112,7 +112,7 @@
                     },
                     ui: {
                         contact: "ارتباط با من",
-                        phoneText: "۰۹۱۲ ۷۳ ۷۳ ۱۵۸", // شماره تلفن خود را جایگزین کنید
+                        phoneText: "۰۹۱۲ ۳۴۵ ۶۷۸۹", // شماره تلفن خود را جایگزین کنید
                     },
                     tabs: {
                         about: "درباره من",
@@ -273,9 +273,14 @@
                                         <React.Fragment key={key}>
                                             <div className="flex flex-col items-stretch relative shrink-0">
                                                 <button
-                                                    onClick={() => {
+                                                    onClick={(e) => {
                                                         setActiveTab(key);
                                                         if (key !== 'portfolio') setActiveFilter('all');
+                                                        
+                                                        // حرکت خودکار و نرم منو در موبایل به سمت مرکز
+                                                        if (window.innerWidth < 1024) {
+                                                            e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                                                        }
                                                     }}
                                                     className={`relative group px-3 py-2 lg:px-4 lg:py-3 text-[11px] lg:text-sm font-bold rounded-xl transition-all duration-300 whitespace-nowrap shrink-0 w-full ${activeTab === key ? 'text-[#0000fc] bg-white shadow-sm' : 'text-gray-500 hover:text-gray-900 hover:bg-white/50'} ${language === 'en' ? 'lg:text-left text-center' : 'lg:text-right text-center'}`}
                                                 >
