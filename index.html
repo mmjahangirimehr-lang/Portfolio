@@ -44,6 +44,9 @@
 
         /* فونت گوگل (Inter) برای بخش انگلیسی */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        
+        /* فونت بک‌آپ (وزیرمتن) برای زمانی که فایل مدام روی گوشی در دسترس نیست */
+        @import url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.0.0/Vazirmatn-font-face.css');
 
         html, body {
             overflow-y: scroll !important;
@@ -109,7 +112,7 @@
                     },
                     ui: {
                         contact: "ارتباط با من",
-                        phoneText: "۰۹۱۲ ۳۴۵ ۶۷۸۹", // شماره تلفن خود را جایگزین کنید
+                        phoneText: "۰۹۱۲ ۷۳ ۷۳ ۱۵۸", // شماره تلفن خود را جایگزین کنید
                     },
                     tabs: {
                         about: "درباره من",
@@ -205,7 +208,7 @@
                     type: 'video',
                     title: { fa: "تیزر تبلیغاتی محصول", en: "Product Promo Video" }, 
                     thumbnail: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=600",
-                    mediaUrl: "https://www.w3schools.com/html/mov_bbb.mp4", // لینک ویدیوی تستی
+                    mediaUrl: "https://www.w3schools.com/html/mov_bbb.mp4", 
                     desc: { fa: "ساخت تیزر تبلیغاتی با استفاده از افتر افکت و سینما فوردی.", en: "Creating promotional teaser using After Effects and Cinema 4D." }
                 },
                 { 
@@ -241,11 +244,10 @@
                 <div 
                     className="min-h-screen bg-[#fafafa] flex justify-center selection:bg-[#0000fc] selection:text-white transition-colors duration-500"
                     dir={language === 'fa' ? 'rtl' : 'ltr'}
-                    style={{ fontFamily: language === 'fa' ? '"Modam", "Inter", sans-serif' : '"Inter", "Modam", sans-serif' }}
                 >
                     <div className="w-full max-w-6xl lg:p-8 flex flex-col lg:flex-row gap-0 lg:gap-10 relative items-start">
                         
-                        {}
+                        {/* سایدبار پروفایل */}
                         <aside className="w-full lg:w-[280px] shrink-0 bg-[#f2f3f5] lg:rounded-2xl flex flex-col lg:sticky lg:top-8 shadow-[0_4px_20px_rgb(0,0,0,0.03)] lg:h-[calc(100vh-4rem)] z-40">
                             
                             {/* ردیف اول: عکس پروفایل و دکمه‌های زبان */}
@@ -253,7 +255,7 @@
                                 <div className="flex items-center gap-3 bg-white p-2 lg:p-3 rounded-2xl shadow-sm flex-1 lg:flex-none w-full lg:w-auto">
                                     <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-xl bg-gradient-to-br from-[#0000fc] to-blue-400 overflow-hidden shrink-0 shadow-sm"></div>
                                     <div className="flex flex-col min-w-0">
-                                        <h1 className="text-gray-900 font-black text-sm truncate">{currentContent.profile.name}</h1>
+                                        <h1 className="text-gray-900 font-black text-[13px] truncate">{currentContent.profile.name}</h1>
                                         <p className="text-gray-500 text-[10px] lg:text-[11px] truncate mt-0.5">{currentContent.profile.title}</p>
                                     </div>
                                 </div>
@@ -264,13 +266,12 @@
                                 </div>
                             </div>
 
-                            {}
                             {/* ردیف دوم: منوها (اسکرول افقی در موبایل) */}
                             <div className="flex-none lg:flex-1 overflow-x-auto lg:overflow-y-auto px-4 lg:px-6 pb-2 lg:pb-6 scrollbar-hide relative z-10 w-full">
                                 <nav className="flex flex-row lg:flex-col items-start lg:items-stretch gap-1 lg:gap-0 w-max lg:w-full">
                                     {Object.keys(currentTabs).map((key, index) => (
                                         <React.Fragment key={key}>
-                                            <div className="flex flex-col items-center lg:items-stretch relative shrink-0">
+                                            <div className="flex flex-col items-stretch relative shrink-0">
                                                 <button
                                                     onClick={() => {
                                                         setActiveTab(key);
@@ -281,15 +282,15 @@
                                                     <span className="relative z-10">{currentTabs[key]}</span>
                                                 </button>
 
-                                                {/* زیرمنوهای نمونه کار (باز شدن عمودی در موبایل) */}
+                                                {/* زیرمنوهای نمونه کار (باز شدن عمودی در زیر همان تب برای موبایل و دسکتاپ) */}
                                                 {key === 'portfolio' && (
-                                                    <div className={`overflow-hidden transition-all duration-500 ease-in-out flex flex-col items-stretch w-full lg:px-2 ${activeTab === 'portfolio' ? 'max-h-[250px] opacity-100 mt-1 lg:mt-0 lg:my-2' : 'max-h-0 opacity-0 mt-0 m-0'}`}>
-                                                        <div className={`flex flex-col gap-1 items-stretch ${language === 'fa' ? 'lg:border-r-2 lg:border-gray-200/60 lg:pr-2 lg:mr-2' : 'lg:border-l-2 lg:border-gray-200/60 lg:pl-2 lg:ml-2'}`}>
+                                                    <div className={`overflow-hidden transition-all duration-500 ease-in-out flex flex-col items-stretch w-full lg:px-2 ${activeTab === 'portfolio' ? 'max-h-[250px] opacity-100 mt-1 lg:my-2' : 'max-h-0 opacity-0 mt-0 m-0'}`}>
+                                                        <div className={`flex flex-col gap-1 items-stretch ${language === 'fa' ? 'border-r-2 border-gray-200/60 pr-2 mr-2' : 'border-l-2 border-gray-200/60 pl-2 ml-2'}`}>
                                                             {Object.keys(currentFilters).map((filterKey) => (
                                                                 <button
                                                                     key={filterKey}
                                                                     onClick={(e) => { e.stopPropagation(); setActiveFilter(filterKey); }}
-                                                                    className={`text-[10px] lg:text-xs font-bold py-1.5 lg:py-2 px-2 lg:px-3 rounded-lg transition-all whitespace-nowrap shrink-0 w-full text-center ${language === 'en' ? 'lg:text-left' : 'lg:text-right'} ${activeFilter === filterKey ? 'text-[#0000fc] bg-blue-50/50' : 'text-gray-400 hover:text-gray-700 hover:bg-gray-100/50'}`}
+                                                                    className={`text-[10px] lg:text-xs font-bold py-1.5 lg:py-2 px-2 lg:px-3 rounded-lg transition-all whitespace-nowrap shrink-0 w-full text-center ${language === 'en' ? 'text-left' : 'text-right'} ${activeFilter === filterKey ? 'text-[#0000fc] bg-blue-50/50' : 'text-gray-400 hover:text-gray-700 hover:bg-gray-100/50'}`}
                                                                 >
                                                                     {currentFilters[filterKey]}
                                                                 </button>
@@ -308,7 +309,6 @@
                                 </nav>
                             </div>
 
-                            {}
                             {/* ردیف سوم: دکمه تماس با من */}
                             <div className="hidden lg:block relative shrink-0 pt-4 pb-6 px-6 z-20 mt-auto bg-[#f2f3f5]">
                                 <div className="flex flex-col relative w-full items-center">
@@ -332,7 +332,7 @@
                             </div>
                         </aside>
 
-                        {}
+                        {/* بخش اصلی محتوا */}
                         <main className="flex-1 w-full relative min-w-0 px-4 pb-12 lg:px-0 mt-4 lg:mt-0">
                             
                             {/* ماسک گرادیانت و باکس عنوان */}
@@ -381,7 +381,6 @@
                                         </div>
                                     )}
 
-                                    {}
                                     {activeTab === 'portfolio' && (
                                         <div key={`portfolio-${activeFilter}`} style={{ animation: 'slideUp 0.7s ease-out, fadeIn 0.7s ease-out' }} className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                                             {filteredPortfolio.map((item) => (
@@ -427,7 +426,6 @@
                             </div>
                         </main>
                         
-                        {}
                         {/* مودال نمایش پروژه */}
                         {selectedProject && (
                             <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-12">
@@ -476,9 +474,9 @@
                         
                         <style>
                             {`
-                            /* اجبار مرورگرهای موبایل به استفاده از فونت صحیح روی دکمه‌ها و فرم‌ها */
-                            body, button, input, select, textarea {
-                                font-family: ${language === 'fa' ? '"Modam", "Inter", sans-serif' : '"Inter", "Modam", sans-serif'} !important;
+                            /* اجبار مرورگرهای موبایل به استفاده از فونت صحیح روی همه عناصر */
+                            * {
+                                font-family: ${language === 'fa' ? '"Modam", "Vazirmatn", "Inter", sans-serif' : '"Inter", "Modam", "Vazirmatn", sans-serif'} !important;
                             }
 
                             @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
