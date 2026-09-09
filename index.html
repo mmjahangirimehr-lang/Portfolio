@@ -49,12 +49,12 @@
         html, body {
             overflow-y: scroll !important;
             background-color: #121212; /* رنگ پس‌زمینه دارک */
-            scrollbar-gutter: stable; /* جلوگیری از پرش صفحه هنگام تغییر تب‌ها */
         }
         
         /* اسکرول‌بار تاریک */
         ::-webkit-scrollbar {
             width: 8px;
+            height: 4px;
         }
         ::-webkit-scrollbar-track {
             background: #121212;
@@ -271,11 +271,12 @@
                                 </div>
                             </div>
 
-                            <div className="flex-none lg:flex-1 overflow-x-auto lg:overflow-y-auto px-4 lg:px-6 pb-2 lg:pb-6 scrollbar-hide relative z-10 w-full">
-                                <nav className="flex flex-row lg:flex-col items-start lg:items-stretch gap-1 lg:gap-0 w-max lg:w-full">
+                            {/* بخش منوی تب‌ها: افقی و اسکرول‌شونده در موبایل، عمودی در دسکتاپ */}
+                            <div className="flex-none lg:flex-1 overflow-x-auto lg:overflow-y-auto px-4 lg:px-6 pb-3 lg:pb-6 scrollbar-hide relative z-10 w-full">
+                                <nav className="flex flex-row lg:flex-col items-center lg:items-stretch gap-2 lg:gap-0 w-max lg:w-full">
                                     {Object.keys(currentTabs).map((key, index) => (
                                         <React.Fragment key={key}>
-                                            <div className="flex flex-col items-stretch relative shrink-0 w-full">
+                                            <div className="flex flex-col items-stretch relative shrink-0">
                                                 <button
                                                     onClick={(e) => {
                                                         if (activeTab === key && key === 'portfolio') {
@@ -289,15 +290,15 @@
                                                             e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
                                                         }
                                                     }}
-                                                    className={`relative group px-3 py-2 lg:px-4 lg:py-3 text-[11px] lg:text-sm font-bold rounded-xl transition-all duration-300 whitespace-nowrap shrink-0 w-full ${activeTab === key ? 'text-blue-400 bg-[#282828] shadow-sm' : 'text-gray-400 hover:text-white hover:bg-white/5'} ${language === 'en' ? 'lg:text-left text-center' : 'lg:text-right text-center'}`}
+                                                    className={`relative group px-3.5 py-2 lg:px-4 lg:py-3 text-[11px] lg:text-sm font-bold rounded-xl transition-all duration-300 whitespace-nowrap shrink-0 w-full ${activeTab === key ? 'text-blue-400 bg-[#282828] shadow-sm' : 'text-gray-400 hover:text-white hover:bg-white/5'} ${language === 'en' ? 'lg:text-left text-center' : 'lg:text-right text-center'}`}
                                                 >
                                                     <span className="relative z-10">{currentTabs[key]}</span>
                                                 </button>
 
-                                                {/* زیرمنوی نمونه‌کارها (اصلاح شده برای چپ‌چین در انگلیسی و راست‌چین در فارسی) */}
+                                                {/* زیرمنوی نمونه‌کارها (موقعیت‌دهی واکنش‌گرا برای حالت موبایل و دسکتاپ) */}
                                                 {key === 'portfolio' && (
                                                     <div className={`overflow-hidden transition-all duration-500 ease-in-out flex flex-col items-stretch w-full lg:px-2 ${activeTab === 'portfolio' ? 'max-h-[250px] opacity-100 mt-1 lg:my-2' : 'max-h-0 opacity-0 mt-0 m-0'}`}>
-                                                        <div className={`flex flex-col gap-1 items-stretch ${language === 'fa' ? 'border-r-2 border-gray-700/60 pr-2 mr-2' : 'border-l-2 border-gray-700/60 pl-2 ml-2'}`}>
+                                                        <div className={`flex flex-col gap-1 items-stretch ${language === 'fa' ? 'lg:border-r-2 border-gray-700/60 lg:pr-2 lg:mr-2' : 'lg:border-l-2 border-gray-700/60 lg:pl-2 lg:ml-2'}`}>
                                                             {Object.keys(currentFilters).map((filterKey) => (
                                                                 <button
                                                                     key={filterKey}
@@ -313,7 +314,7 @@
                                             </div>
 
                                             {index < Object.keys(currentTabs).length - 1 && (
-                                                <div className="w-px h-4 lg:w-full lg:h-px bg-gray-700/50 mx-1 lg:mx-0 lg:my-1 shrink-0 mt-2.5 lg:mt-0"></div>
+                                                <div className="hidden lg:block w-full h-px bg-gray-700/50 my-1 shrink-0"></div>
                                             )}
                                         </React.Fragment>
                                     ))}
