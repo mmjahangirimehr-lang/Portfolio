@@ -89,6 +89,7 @@
         const ChevronLeft = ({ className }) => <i data-lucide="chevron-left" className={className}></i>;
         const Play = ({ className }) => <i data-lucide="play" className={className || "w-12 h-12 text-white ml-1"}></i>;
         const X = () => <i data-lucide="x" className="w-6 h-6 text-gray-400"></i>;
+        const Send = () => <i data-lucide="send" className="w-4 h-4"></i>;
 
         function Portfolio() {
             const [activeTab, setActiveTab] = useState('about');
@@ -115,6 +116,7 @@
                     ui: {
                         contact: "ارتباط با من",
                         phoneText: "۰۹۱۲ ۷۳ ۷۳ ۱۵۸",
+                        telegram: "@Mahdi_jahangirimehr"
                     },
                     tabs: {
                         about: "درباره من",
@@ -138,6 +140,7 @@
                     ui: {
                         contact: "Contact Me",
                         phoneText: "+98 912 73 73 158",
+                        telegram: "@Mahdi_jahangirimehr"
                     },
                     tabs: {
                         about: "About Me",
@@ -266,8 +269,17 @@
                                 </div>
                                 
                                 <div className="flex gap-1 bg-[#282828] p-1 rounded-xl shadow-sm shrink-0">
-                                    <button onClick={() => setLanguage('fa')} className={`px-2.5 lg:px-3 py-1.5 lg:py-1 text-[11px] lg:text-xs font-bold rounded-lg transition-colors ${language === 'fa' ? 'bg-[#0000fc] text-white' : 'text-gray-400 hover:bg-[#333]'}`}>فارسی</button>
-                                    <button onClick={() => setLanguage('en')} className={`px-2.5 lg:px-3 py-1.5 lg:py-1 text-[11px] lg:text-xs font-bold rounded-lg transition-colors ${language === 'en' ? 'bg-[#0000fc] text-white' : 'text-gray-400 hover:bg-[#333]'}`}>English</button>
+                                    {language === 'fa' ? (
+                                        <React.Fragment>
+                                            <button onClick={() => setLanguage('fa')} className="px-2.5 lg:px-3 py-1.5 lg:py-1 text-[11px] lg:text-xs font-bold rounded-lg transition-colors bg-[#0000fc] text-white">فارسی</button>
+                                            <button onClick={() => setLanguage('en')} className="px-2.5 lg:px-3 py-1.5 lg:py-1 text-[11px] lg:text-xs font-bold rounded-lg transition-colors text-gray-400 hover:bg-[#333]">English</button>
+                                        </React.Fragment>
+                                    ) : (
+                                        <React.Fragment>
+                                            <button onClick={() => setLanguage('en')} className="px-2.5 lg:px-3 py-1.5 lg:py-1 text-[11px] lg:text-xs font-bold rounded-lg transition-colors bg-[#0000fc] text-white">English</button>
+                                            <button onClick={() => setLanguage('fa')} className="px-2.5 lg:px-3 py-1.5 lg:py-1 text-[11px] lg:text-xs font-bold rounded-lg transition-colors text-gray-400 hover:bg-[#333]">فارسی</button>
+                                        </React.Fragment>
+                                    )}
                                 </div>
                             </div>
 
@@ -295,7 +307,7 @@
                                                     <span className="relative z-10">{currentTabs[key]}</span>
                                                 </button>
 
-                                                {/* زیرمنوی نمونه‌کارها (موقعیت‌دهی واکنش‌گرا برای حالت موبایل و دسکتاپ) */}
+                                                {/* زیرمنوی نمونه‌کارها (موقعیت‌دهی واکنش‌گرا برای حالت موبایل و دسکتاپ و اصلاح راست/چپ‌چین) */}
                                                 {key === 'portfolio' && (
                                                     <div className={`overflow-hidden transition-all duration-500 ease-in-out flex flex-col items-stretch w-full lg:px-2 ${activeTab === 'portfolio' ? 'max-h-[250px] opacity-100 mt-1 lg:my-2' : 'max-h-0 opacity-0 mt-0 m-0'}`}>
                                                         <div className={`flex flex-col gap-1 items-stretch ${language === 'fa' ? 'lg:border-r-2 border-gray-700/60 lg:pr-2 lg:mr-2' : 'lg:border-l-2 border-gray-700/60 lg:pl-2 lg:ml-2'}`}>
@@ -325,18 +337,26 @@
                                 <div className="flex flex-col relative w-full items-center">
                                     <button 
                                         onClick={() => setShowPhone(!showPhone)}
-                                        className="group relative z-10 flex items-center justify-between w-full h-11 px-4 bg-white text-black text-[13px] font-bold rounded-xl hover:bg-gray-200 transition-all duration-300 shadow-md"
+                                        className="group relative z-10 flex items-center justify-between w-full h-11 px-4 bg-[#282828] border border-gray-700 text-gray-300 text-[13px] font-bold rounded-xl hover:bg-[#333] hover:text-white transition-all duration-300 shadow-md"
                                     >
                                         <span>{currentUI.contact}</span>
                                         <ChevronLeft className={`w-4 h-4 transition-transform duration-300 ${showPhone ? '-rotate-90' : (language === 'fa' ? 'rotate-0' : 'rotate-180')}`} />
                                     </button>
                                     
-                                    <div className={`w-full overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${showPhone ? 'max-h-16 opacity-100 mt-2' : 'max-h-0 opacity-0 mt-0'}`}>
-                                        <div className="bg-[#282828] h-11 px-4 rounded-xl flex items-center gap-3 border border-gray-700 shadow-sm w-full">
-                                            <div className="w-6 h-6 rounded-md bg-[#1e1e1e] flex items-center justify-center text-gray-400 shrink-0"><Phone /></div>
-                                            <a href="tel:+989127373158" className="text-white font-bold tracking-widest text-[13px] hover:text-blue-400 transition-colors mt-0.5" dir="ltr">
-                                                {currentUI.phoneText}
-                                            </a>
+                                    <div className={`w-full overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${showPhone ? 'max-h-[120px] opacity-100 mt-2' : 'max-h-0 opacity-0 mt-0'}`}>
+                                        <div className="flex flex-col gap-2 w-full">
+                                            <div className="bg-[#282828] h-11 px-4 rounded-xl flex items-center gap-3 border border-gray-700 shadow-sm w-full">
+                                                <div className="w-6 h-6 rounded-md bg-[#1e1e1e] flex items-center justify-center text-gray-400 shrink-0"><Phone /></div>
+                                                <a href="tel:+989127373158" className="text-white font-bold tracking-widest text-[13px] hover:text-blue-400 transition-colors mt-0.5" dir="ltr">
+                                                    {currentUI.phoneText}
+                                                </a>
+                                            </div>
+                                            <div className="bg-[#282828] h-11 px-4 rounded-xl flex items-center gap-3 border border-gray-700 shadow-sm w-full">
+                                                <div className="w-6 h-6 rounded-md bg-[#1e1e1e] flex items-center justify-center text-gray-400 shrink-0"><Send /></div>
+                                                <a href="https://t.me/Mahdi_jahangirimehr" target="_blank" rel="noopener noreferrer" className="text-white font-bold tracking-widest text-[13px] hover:text-blue-400 transition-colors mt-0.5" dir="ltr">
+                                                    {currentUI.telegram}
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -345,6 +365,7 @@
 
                         <main className="flex-1 w-full relative min-w-0 px-4 pb-12 lg:px-0 mt-4 lg:mt-0">
                             
+                            {}
                             <div className="sticky top-0 z-30 pt-0 bg-[#121212]">
                                 <div className="pt-2 lg:pt-4 bg-[#121212]">
                                     <div 
@@ -389,6 +410,7 @@
                                         </div>
                                     )}
 
+                                    {}
                                     {activeTab === 'portfolio' && (
                                         <div key={`portfolio-${activeFilter}`} style={{ animation: 'zoomIn 0.5s cubic-bezier(0.16,1,0.3,1), fadeIn 0.5s ease-out' }} className="grid grid-cols-3 gap-2 sm:gap-4 lg:gap-6">
                                             {filteredPortfolio.map((item) => (
@@ -434,6 +456,7 @@
                             </div>
                         </main>
                         
+                        {}
                         {selectedProject && (
                             <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-12">
                                 <div 
