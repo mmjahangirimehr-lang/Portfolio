@@ -42,12 +42,14 @@
             font-display: swap;
         }
 
+        /* فونت‌های بک‌آپ آنلاین */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
         @import url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.0.0/Vazirmatn-font-face.css');
 
         html, body {
             overflow-y: scroll !important;
             background-color: #121212; /* رنگ پس‌زمینه دارک */
+            scrollbar-gutter: stable; /* جلوگیری از پرش صفحه هنگام تغییر تب‌ها */
         }
         
         /* اسکرول‌بار تاریک */
@@ -85,7 +87,7 @@
         const Mail = () => <i data-lucide="mail" className="w-4 h-4"></i>;
         const Phone = () => <i data-lucide="phone" className="w-3.5 h-3.5"></i>;
         const ChevronLeft = ({ className }) => <i data-lucide="chevron-left" className={className}></i>;
-        const Play = () => <i data-lucide="play" className="w-12 h-12 text-white ml-1"></i>;
+        const Play = ({ className }) => <i data-lucide="play" className={className || "w-12 h-12 text-white ml-1"}></i>;
         const X = () => <i data-lucide="x" className="w-6 h-6 text-gray-400"></i>;
 
         function Portfolio() {
@@ -273,7 +275,7 @@
                                 <nav className="flex flex-row lg:flex-col items-start lg:items-stretch gap-1 lg:gap-0 w-max lg:w-full">
                                     {Object.keys(currentTabs).map((key, index) => (
                                         <React.Fragment key={key}>
-                                            <div className="flex flex-col items-stretch relative shrink-0">
+                                            <div className="flex flex-col items-stretch relative shrink-0 w-full">
                                                 <button
                                                     onClick={(e) => {
                                                         if (activeTab === key && key === 'portfolio') {
@@ -292,6 +294,7 @@
                                                     <span className="relative z-10">{currentTabs[key]}</span>
                                                 </button>
 
+                                                {/* زیرمنوی نمونه‌کارها (اصلاح شده برای چپ‌چین در انگلیسی و راست‌چین در فارسی) */}
                                                 {key === 'portfolio' && (
                                                     <div className={`overflow-hidden transition-all duration-500 ease-in-out flex flex-col items-stretch w-full lg:px-2 ${activeTab === 'portfolio' ? 'max-h-[250px] opacity-100 mt-1 lg:my-2' : 'max-h-0 opacity-0 mt-0 m-0'}`}>
                                                         <div className={`flex flex-col gap-1 items-stretch ${language === 'fa' ? 'border-r-2 border-gray-700/60 pr-2 mr-2' : 'border-l-2 border-gray-700/60 pl-2 ml-2'}`}>
@@ -299,7 +302,7 @@
                                                                 <button
                                                                     key={filterKey}
                                                                     onClick={(e) => { e.stopPropagation(); setActiveFilter(filterKey); }}
-                                                                    className={`text-[10px] lg:text-xs font-bold py-1.5 lg:py-2 px-2 lg:px-3 rounded-lg transition-all whitespace-nowrap shrink-0 w-full text-center ${language === 'en' ? 'text-left' : 'text-right'} ${activeFilter === filterKey ? 'text-blue-400 bg-blue-500/10' : 'text-gray-500 hover:text-white hover:bg-white/5'}`}
+                                                                    className={`text-[10px] lg:text-xs font-bold py-1.5 lg:py-2 px-2 lg:px-3 rounded-lg transition-all whitespace-nowrap shrink-0 w-full ${language === 'en' ? 'text-left' : 'text-right'} ${activeFilter === filterKey ? 'text-blue-400 bg-blue-500/10' : 'text-gray-500 hover:text-white hover:bg-white/5'}`}
                                                                 >
                                                                     {currentFilters[filterKey]}
                                                                 </button>
@@ -339,7 +342,6 @@
                             </div>
                         </aside>
 
-                        {}
                         <main className="flex-1 w-full relative min-w-0 px-4 pb-12 lg:px-0 mt-4 lg:mt-0">
                             
                             <div className="sticky top-0 z-30 pt-0 bg-[#121212]">
@@ -387,7 +389,7 @@
                                     )}
 
                                     {activeTab === 'portfolio' && (
-                                        <div key={`portfolio-${activeFilter}`} style={{ animation: 'zoomIn 0.5s cubic-bezier(0.16,1,0.3,1), fadeIn 0.5s ease-out' }} className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                                        <div key={`portfolio-${activeFilter}`} style={{ animation: 'zoomIn 0.5s cubic-bezier(0.16,1,0.3,1), fadeIn 0.5s ease-out' }} className="grid grid-cols-3 gap-2 sm:gap-4 lg:gap-6">
                                             {filteredPortfolio.map((item) => (
                                                 <div 
                                                     key={item.id} 
@@ -399,17 +401,17 @@
                                                         
                                                         {item.type === 'video' && (
                                                             <div className="absolute inset-0 flex items-center justify-center bg-black/40 group-hover:bg-black/20 transition-colors">
-                                                                <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/30 group-hover:scale-110 transition-transform">
-                                                                    <Play />
+                                                                <div className="w-8 h-8 sm:w-12 sm:h-12 lg:w-16 lg:h-16 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/30 group-hover:scale-110 transition-transform">
+                                                                    <Play className="w-4 h-4 sm:w-6 sm:h-6 lg:w-8 lg:h-8 text-white ml-0.5 sm:ml-1" />
                                                                 </div>
                                                             </div>
                                                         )}
                                                     </div>
-                                                    <div className="p-4 sm:p-5">
-                                                        <span className="text-[10px] sm:text-xs font-bold text-blue-400 bg-blue-500/10 px-2 py-1 rounded-md mb-2 inline-block">
+                                                    <div className="p-2 sm:p-3 lg:p-4">
+                                                        <span className="text-[8px] sm:text-[10px] lg:text-xs font-bold text-blue-400 bg-blue-500/10 px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-md mb-1 sm:mb-2 inline-block">
                                                             {currentFilters[item.category]}
                                                         </span>
-                                                        <h4 className="text-white font-bold text-sm sm:text-base group-hover:text-blue-400 transition-colors">{item.title[language]}</h4>
+                                                        <h4 className="text-white font-bold text-[10px] sm:text-xs lg:text-sm group-hover:text-blue-400 transition-colors line-clamp-2 leading-tight">{item.title[language]}</h4>
                                                     </div>
                                                 </div>
                                             ))}
@@ -431,7 +433,6 @@
                             </div>
                         </main>
                         
-                        {}
                         {selectedProject && (
                             <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-12">
                                 <div 
